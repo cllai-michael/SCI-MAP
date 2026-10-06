@@ -8,7 +8,7 @@ Science Mission & Adventure Platform
 
 啟用 GitHub Pages 後，網站在：
 
-https://cllai-michael.github.io/sci-map/
+https://cllai-michael.github.io/SCI-MAP/
 
 ## 一次設定
 
@@ -26,7 +26,7 @@ https://cllai-michael.github.io/sci-map/
 
 1. 開啟 GitHub 的 Fine-grained personal access tokens 頁面，建立新權杖。
 2. Token name 可填 `SCI-MAP`。
-3. Repository access 只選 `sci-map`。
+3. Repository access 只選 `SCI-MAP`。
 4. Repository permissions 裡，把 Contents 設為 Read and write。
 5. Expiration 選最長期限。權杖大約一年後過期，到期再建立一把新的即可。
 6. 產生權杖並複製。GitHub 只會顯示一次。

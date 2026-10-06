@@ -20,6 +20,7 @@ import {
   validateGameInput,
   validateSite
 } from "../js/catalog.js";
+import { SCIMAP } from "../js/config.js";
 import { githubPaths } from "../js/github.js";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
@@ -130,12 +131,13 @@ test("builds one commit tree for files and deletions", () => {
 });
 
 test("accepts only a token that can push to this repository", () => {
+  assert.equal(SCIMAP.repo, "SCI-MAP");
   assert.equal(sessionFromRepo({
-    full_name: "cllai-michael/sci-map",
+    full_name: `${SCIMAP.owner}/${SCIMAP.repo}`,
     permissions: { push: true }
   }).ok, true);
   assert.equal(sessionFromRepo({
-    full_name: "cllai-michael/sci-map",
+    full_name: `${SCIMAP.owner}/${SCIMAP.repo}`,
     permissions: { push: false }
   }).ok, false);
   assert.equal(sessionFromRepo({
@@ -161,9 +163,10 @@ test("round-trips traditional Chinese through base64", () => {
 
 test("uses the GitHub endpoints that can update main", () => {
   const paths = githubPaths();
-  assert.equal(paths.ref, "/repos/cllai-michael/sci-map/git/ref/heads/main");
-  assert.equal(paths.updateRef, "/repos/cllai-michael/sci-map/git/refs/heads/main");
-  assert.equal(paths.contents("data/site.json"), "/repos/cllai-michael/sci-map/contents/data/site.json?ref=main");
+  const root = `/repos/${SCIMAP.owner}/${SCIMAP.repo}`;
+  assert.equal(paths.ref, `${root}/git/ref/heads/main`);
+  assert.equal(paths.updateRef, `${root}/git/refs/heads/main`);
+  assert.equal(paths.contents("data/site.json"), `${root}/contents/data/site.json?ref=main`);
 });
 
 test("sample catalog matches files that can be published", () => {

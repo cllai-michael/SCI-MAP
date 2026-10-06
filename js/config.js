@@ -1,5 +1,5 @@
 export const SCIMAP = {
   owner: "cllai-michael",
-  repo: "sci-map",
+  repo: "SCI-MAP",
   branch: "main"
 };
