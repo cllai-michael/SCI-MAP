@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0c3344">
+  <meta name="description" content="SCI-MAP 科學探險島管理員登入。">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.github.com; frame-src 'none'; base-uri 'none'; object-src 'none'; form-action 'none'">
+  <title>管理員｜SCI-MAP</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body data-depth="1">
+  <div class="sky">
+    <header class="wrap topbar">
+      <a class="brand" href="../">
+        <svg class="compass" viewBox="0 0 64 64" aria-hidden="true">
+          <circle cx="32" cy="32" r="22" fill="none" stroke="currentColor" stroke-width="2.5"></circle>
+          <path d="M32 10l5.2 18.2L32 32 26.8 28.2 32 10z" fill="#e07a5f"></path>
+          <path d="M32 54l-5.2-18.2L32 32l5.2 3.8L32 54z" fill="currentColor"></path>
+          <circle cx="32" cy="32" r="3" fill="#e0a33a"></circle>
+        </svg>
+        <span class="brand-text">
+          <span class="brand-mark">SCI-MAP</span>
+          <span class="brand-sub">科學探險島</span>
+        </span>
+      </a>
+      <a class="back-link" href="../">返回探險島</a>
+    </header>
+    <main class="wrap admin-wrap">
+      <div class="admin-stack">
+        <section id="login-panel" class="panel">
+          <h1>管理員登入</h1>
+          <form id="login-form">
+            <label class="field">
+              <span>GitHub 存取權杖</span>
+              <input id="token" name="token" type="password" autocomplete="off" spellcheck="false" required>
+            </label>
+            <div class="form-actions">
+              <button class="button" type="submit">登入</button>
+              <button id="toggle-token" class="button button-quiet" type="button">顯示權杖</button>
+            </div>
+            <ul id="login-errors" class="errors" hidden></ul>
+          </form>
+          <p class="hint">權杖只留在本次開啟的頁面，重新整理後需要再貼上。這是為了避免遊戲網頁讀取權杖。</p>
+          <p class="hint">請使用只限本儲存庫、Contents 可讀寫的細粒度權杖。學生沒有這把權杖，就不能修改平台。</p>
+        </section>
+
+        <section id="admin-panel" class="panel" hidden>
+          <div class="admin-bar">
+            <p id="session-label">已登入</p>
+            <button id="logout" class="button button-quiet" type="button">登出</button>
+          </div>
+          <p id="notice" class="notice" role="status"></p>
+
+          <form id="site-form">
+            <h2>首頁內容</h2>
+            <label class="field">
+              <span>首頁標題</span>
+              <input id="site-title" name="title" maxlength="80" required>
+            </label>
+            <label class="field">
+              <span>首頁介紹</span>
+              <textarea id="site-intro" name="intro" maxlength="500" required></textarea>
+            </label>
+            <ul id="site-errors" class="errors" hidden></ul>
+            <div class="form-actions">
+              <button class="button button-gold" type="submit">儲存首頁</button>
+            </div>
+          </form>
+
+          <section class="section-space" aria-labelledby="games-heading">
+            <div class="section-head">
+              <h2 id="games-heading">遊戲</h2>
+              <button id="save-order" class="button button-gold" type="button" hidden>儲存順序</button>
+            </div>
+            <p id="order-note" class="hint" hidden>順序已改，記得按「儲存順序」。</p>
+            <div id="game-admin"></div>
+          </section>
+
+          <form id="game-form">
+            <h2 id="game-form-title">新增遊戲</h2>
+            <label class="field">
+              <span>遊戲名稱</span>
+              <input id="game-name" name="name" maxlength="40" required>
+            </label>
+            <label class="field">
+              <span>遊戲介紹</span>
+              <textarea id="game-description" name="description" maxlength="200" required></textarea>
+            </label>
+            <label class="field">
+              <span>所屬學科</span>
+              <select id="game-subject" name="subject" required>
+                <option value="is">IS　綜合科學</option>
+                <option value="chem">CHEM　化學</option>
+                <option value="bio">BIO　生物</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>HTML 遊戲檔</span>
+              <input id="game-file" name="file" type="file" accept=".html,.htm,text/html">
+            </label>
+            <p id="file-hint" class="hint">請上傳一個完整的 HTML 檔。樣式、程式及圖片請內嵌在檔案內。上限 8MB。</p>
+            <ul id="game-errors" class="errors" hidden></ul>
+            <div class="form-actions">
+              <button id="game-submit" class="button button-gold" type="submit">上傳遊戲</button>
+              <button id="game-cancel" class="button button-quiet" type="button" hidden>取消</button>
+            </div>
+          </form>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script type="module" src="../js/admin.js"></script>
+</body>
+</html>

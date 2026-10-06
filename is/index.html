@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#0c3344">
+  <meta name="description" content="SCI-MAP 綜合科學遊戲。每一站，都是新發現。">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; frame-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'">
+  <title>綜合科學｜SCI-MAP</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body data-depth="1" data-subject="is">
+  <div class="sky">
+    <header class="wrap topbar">
+      <a class="brand" href="../">
+        <svg class="compass" viewBox="0 0 64 64" aria-hidden="true">
+          <circle cx="32" cy="32" r="22" fill="none" stroke="currentColor" stroke-width="2.5"></circle>
+          <path d="M32 10l5.2 18.2L32 32 26.8 28.2 32 10z" fill="#e07a5f"></path>
+          <path d="M32 54l-5.2-18.2L32 32l5.2 3.8L32 54z" fill="currentColor"></path>
+          <circle cx="32" cy="32" r="3" fill="#e0a33a"></circle>
+        </svg>
+        <span class="brand-text">
+          <span class="brand-mark">SCI-MAP</span>
+          <span class="brand-sub">科學探險島</span>
+        </span>
+      </a>
+      <a class="back-link" href="../">返回探險島</a>
+    </header>
+    <main class="wrap">
+      <section class="station-hero tone-is">
+        <p class="station-code">IS</p>
+        <h1>綜合科學</h1>
+        <p>從日常生活走進科學</p>
+      </section>
+      <section class="section-space" aria-labelledby="game-heading">
+        <h2 id="game-heading" class="visually-hidden">遊戲</h2>
+        <div id="game-list" class="game-grid"></div>
+        <p id="empty-state" class="empty" hidden>這一站尚未有遊戲，請稍後再來探險。</p>
+      </section>
+      <noscript><p class="noscript">請啟用 JavaScript，才能載入遊戲。</p></noscript>
+      <p class="quiet-note">黎澤朗老師的科學探險島</p>
+    </main>
+  </div>
+  <script type="module" src="../js/station.js"></script>
+</body>
+</html>

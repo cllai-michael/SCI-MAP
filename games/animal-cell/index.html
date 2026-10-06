@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>動物細胞</title>
+  <style>
+    :root { color-scheme: light; }
+    body { margin: 0; font-family: "PingFang TC", "Microsoft JhengHei", sans-serif; background: #e8f5e8; color: #173028; }
+    main { max-width: 640px; margin: 0 auto; padding: 1.4rem 1rem 2rem; }
+    .kicker { margin: 0; letter-spacing: 0.08em; color: #2f6d3a; font-weight: 700; }
+    h1 { margin: 0.2rem 0 0.6rem; font-size: 2rem; }
+    .progress { margin: 0; color: #3e5560; }
+    .ask { font-size: 1.3rem; line-height: 1.5; min-height: 4.2rem; }
+    .choices { display: grid; gap: 0.75rem; }
+    button { font: inherit; font-size: 1.1rem; min-height: 52px; border-radius: 14px; border: 2px solid #2f6d3a; background: white; color: #173028; cursor: pointer; }
+    button:focus-visible { outline: 3px solid #e0a33a; outline-offset: 2px; }
+    button.right { background: #d9f3e8; }
+    button.wrong { background: #fde8e4; }
+    #feedback { min-height: 1.5rem; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="kicker">生物</p>
+    <h1>動物細胞</h1>
+    <p id="progress" class="progress"></p>
+    <p id="prompt" class="ask"></p>
+    <div id="choices" class="choices"></div>
+    <p id="feedback" role="status"></p>
+  </main>
+  <script>
+    const questions = [
+      {
+        prompt: "哪一部分控制物質進出細胞？",
+        choices: ["細胞膜", "細胞核", "細胞質", "粒線體"],
+        answer: "細胞膜"
+      },
+      {
+        prompt: "哪一部分含有遺傳物質，並控制細胞活動？",
+        choices: ["細胞核", "細胞膜", "細胞質", "粒線體"],
+        answer: "細胞核"
+      },
+      {
+        prompt: "細胞核以外、呈膠狀的部分是？",
+        choices: ["細胞質", "細胞膜", "細胞核", "粒線體"],
+        answer: "細胞質"
+      },
+      {
+        prompt: "哪一部分進行呼吸作用，釋放能量？",
+        choices: ["粒線體", "細胞膜", "細胞核", "細胞質"],
+        answer: "粒線體"
+      },
+      {
+        prompt: "動物細胞通常沒有哪一項？",
+        choices: ["細胞壁", "細胞膜", "細胞核", "細胞質"],
+        answer: "細胞壁"
+      }
+    ];
+    const progress = document.querySelector("#progress");
+    const prompt = document.querySelector("#prompt");
+    const choices = document.querySelector("#choices");
+    const feedback = document.querySelector("#feedback");
+    let index = 0;
+    let score = 0;
+    let locked = false;
+
+    function encouragement() {
+      if (score === questions.length) return "全對，這站的發現都收下了。";
+      if (score * 2 >= questions.length) return "不錯，再走一趟會更熟。";
+      return "沒關係，再玩一次就更清楚。";
+    }
+
+    function showScore() {
+      progress.textContent = "完成";
+      prompt.textContent = `你答對 ${score} / ${questions.length} 題。${encouragement()}`;
+      feedback.textContent = "";
+      choices.replaceChildren();
+      const again = document.createElement("button");
+      again.type = "button";
+      again.textContent = "再玩一次";
+      again.addEventListener("click", () => {
+        index = 0;
+        score = 0;
+        locked = false;
+        render();
+      });
+      choices.append(again);
+    }
+
+    function render() {
+      const question = questions[index];
+      progress.textContent = `第 ${index + 1} / ${questions.length} 題`;
+      prompt.textContent = question.prompt;
+      feedback.textContent = "";
+      choices.replaceChildren();
+      for (const choice of question.choices) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = choice;
+        button.addEventListener("click", () => choose(question, choice, button));
+        choices.append(button);
+      }
+    }
+
+    function choose(question, choice, button) {
+      if (locked) return;
+      locked = true;
+      const correct = choice === question.answer;
+      if (correct) score += 1;
+      button.className = correct ? "right" : "wrong";
+      feedback.textContent = correct ? "答對了。" : `答案是${question.answer}。`;
+      const next = document.createElement("button");
+      next.type = "button";
+      next.textContent = index === questions.length - 1 ? "看成績" : "下一題";
+      next.addEventListener("click", () => {
+        index += 1;
+        locked = false;
+        if (index >= questions.length) showScore();
+        else render();
+      });
+      choices.append(next);
+    }
+
+    render();
+  </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#06242e">
+  <meta name="description" content="遊玩 SCI-MAP 科學探險島上的科學遊戲。">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; frame-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'">
+  <title>遊玩｜SCI-MAP</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="page-play" data-depth="1">
+  <header class="play-bar">
+    <a id="back-link" href="../">返回探險島</a>
+    <h1 id="play-title" class="play-title">科學遊戲</h1>
+    <button id="fullscreen" type="button">全螢幕</button>
+  </header>
+  <div class="play-stage">
+    <iframe id="game-frame" title="科學遊戲" sandbox="allow-scripts allow-forms allow-modals allow-popups allow-pointer-lock" referrerpolicy="no-referrer"></iframe>
+  </div>
+  <p id="play-message" class="empty play-message" hidden>找不到這個遊戲。</p>
+  <noscript><p class="noscript play-message">請啟用 JavaScript，才能遊玩遊戲。</p></noscript>
+  <script type="module" src="../js/play.js"></script>
+</body>
+</html>

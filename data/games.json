@@ -1,0 +1,31 @@
+{
+  "games": [
+    {
+      "id": "states-of-matter",
+      "name": "物質三態",
+      "description": "判斷日常現象屬於固體、液體還是氣體，看看你有多熟悉物質的狀態。",
+      "subject": "is",
+      "order": 1,
+      "file": "games/states-of-matter/index.html",
+      "updatedAt": "2026-10-06T00:00:00.000Z"
+    },
+    {
+      "id": "element-symbols",
+      "name": "元素符號",
+      "description": "看元素的中文名稱，選出正確的元素符號。",
+      "subject": "chem",
+      "order": 1,
+      "file": "games/element-symbols/index.html",
+      "updatedAt": "2026-10-06T00:00:00.000Z"
+    },
+    {
+      "id": "animal-cell",
+      "name": "動物細胞",
+      "description": "認識動物細胞的基本部分，看看你能不能對上名稱和功能。",
+      "subject": "bio",
+      "order": 1,
+      "file": "games/animal-cell/index.html",
+      "updatedAt": "2026-10-06T00:00:00.000Z"
+    }
+  ]
+}

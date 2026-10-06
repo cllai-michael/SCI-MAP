@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>物質三態</title>
+  <style>
+    :root { color-scheme: light; }
+    body { margin: 0; font-family: "PingFang TC", "Microsoft JhengHei", sans-serif; background: #e7f6f1; color: #173028; }
+    main { max-width: 640px; margin: 0 auto; padding: 1.4rem 1rem 2rem; }
+    .kicker { margin: 0; letter-spacing: 0.08em; color: #147a62; font-weight: 700; }
+    h1 { margin: 0.2rem 0 0.6rem; font-size: 2rem; }
+    .progress { margin: 0; color: #3e5560; }
+    .ask { font-size: 1.3rem; line-height: 1.5; min-height: 4.2rem; }
+    .choices { display: grid; gap: 0.75rem; }
+    button { font: inherit; font-size: 1.1rem; min-height: 52px; border-radius: 14px; border: 2px solid #147a62; background: white; color: #173028; cursor: pointer; }
+    button:focus-visible { outline: 3px solid #e0a33a; outline-offset: 2px; }
+    button.right { background: #d9f3e8; }
+    button.wrong { background: #fde8e4; }
+    #feedback { min-height: 1.5rem; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="kicker">綜合科學</p>
+    <h1>物質三態</h1>
+    <p id="progress" class="progress"></p>
+    <p id="prompt" class="ask"></p>
+    <div id="choices" class="choices"></div>
+    <p id="feedback" role="status"></p>
+  </main>
+  <script>
+    const questions = [
+      { prompt: "冰塊是哪一種狀態？", choices: ["固體", "液體", "氣體"], answer: "固體" },
+      { prompt: "雨水是哪一種狀態？", choices: ["固體", "液體", "氣體"], answer: "液體" },
+      { prompt: "水蒸氣是哪一種狀態？", choices: ["固體", "液體", "氣體"], answer: "氣體" },
+      { prompt: "雪花是哪一種狀態？", choices: ["固體", "液體", "氣體"], answer: "固體" },
+      { prompt: "橙汁是哪一種狀態？", choices: ["固體", "液體", "氣體"], answer: "液體" },
+      { prompt: "呼出的空氣是哪一種狀態？", choices: ["固體", "液體", "氣體"], answer: "氣體" }
+    ];
+    const progress = document.querySelector("#progress");
+    const prompt = document.querySelector("#prompt");
+    const choices = document.querySelector("#choices");
+    const feedback = document.querySelector("#feedback");
+    let index = 0;
+    let score = 0;
+    let locked = false;
+
+    function encouragement() {
+      if (score === questions.length) return "全對，這站的發現都收下了。";
+      if (score * 2 >= questions.length) return "不錯，再走一趟會更熟。";
+      return "沒關係，再玩一次就更清楚。";
+    }
+
+    function showScore() {
+      progress.textContent = "完成";
+      prompt.textContent = `你答對 ${score} / ${questions.length} 題。${encouragement()}`;
+      feedback.textContent = "";
+      choices.replaceChildren();
+      const again = document.createElement("button");
+      again.type = "button";
+      again.textContent = "再玩一次";
+      again.addEventListener("click", () => {
+        index = 0;
+        score = 0;
+        locked = false;
+        render();
+      });
+      choices.append(again);
+    }
+
+    function render() {
+      const question = questions[index];
+      progress.textContent = `第 ${index + 1} / ${questions.length} 題`;
+      prompt.textContent = question.prompt;
+      feedback.textContent = "";
+      choices.replaceChildren();
+      for (const choice of question.choices) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = choice;
+        button.addEventListener("click", () => choose(question, choice, button));
+        choices.append(button);
+      }
+    }
+
+    function choose(question, choice, button) {
+      if (locked) return;
+      locked = true;
+      const correct = choice === question.answer;
+      if (correct) score += 1;
+      button.className = correct ? "right" : "wrong";
+      feedback.textContent = correct ? "答對了。" : `答案是${question.answer}。`;
+      const next = document.createElement("button");
+      next.type = "button";
+      next.textContent = index === questions.length - 1 ? "看成績" : "下一題";
+      next.addEventListener("click", () => {
+        index += 1;
+        locked = false;
+        if (index >= questions.length) showScore();
+        else render();
+      });
+      choices.append(next);
+    }
+
+    render();
+  </script>
+</body>
+</html>

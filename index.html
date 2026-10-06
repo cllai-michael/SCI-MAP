@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#0c3344">
+  <meta name="description" content="SCI-MAP 科學探險島是黎澤朗老師的科學遊戲平台。每一站，都是新發現。">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; frame-src 'self'; base-uri 'none'; object-src 'none'; form-action 'none'">
+  <title>SCI-MAP｜科學探險島</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-depth="0">
+  <div class="sky">
+    <header class="wrap topbar">
+      <a class="brand" href="./">
+        <svg class="compass" viewBox="0 0 64 64" aria-hidden="true">
+          <circle cx="32" cy="32" r="22" fill="none" stroke="currentColor" stroke-width="2.5"></circle>
+          <path d="M32 10l5.2 18.2L32 32 26.8 28.2 32 10z" fill="#e07a5f"></path>
+          <path d="M32 54l-5.2-18.2L32 32l5.2 3.8L32 54z" fill="currentColor"></path>
+          <circle cx="32" cy="32" r="3" fill="#e0a33a"></circle>
+        </svg>
+        <span class="brand-text">
+          <span class="brand-mark">SCI-MAP</span>
+          <span class="brand-sub">科學探險島</span>
+        </span>
+      </a>
+    </header>
+    <main class="wrap">
+      <section class="hero logbook">
+        <p class="eyebrow">Science Mission &amp; Adventure Platform</p>
+        <h1 id="site-title">SCI-MAP｜科學探險島</h1>
+        <p class="slogan">每一站，都是新發現。</p>
+        <p id="site-intro" class="intro">歡迎來到科學探險島。這裡收集了黎澤朗老師製作的科學遊戲。同學可以按綜合科學、化學或生物進入不同小島，邊玩邊學，不需要登入。</p>
+        <p class="creator">創作者　<strong>黎澤朗老師</strong></p>
+      </section>
+      <section class="route" aria-labelledby="route-heading">
+        <h2 id="route-heading">選擇下一站</h2>
+        <ol class="stations">
+          <li>
+            <a class="station station-is" href="is/">
+              <svg class="station-icon" viewBox="0 0 120 70" aria-hidden="true">
+                <ellipse cx="60" cy="50" rx="46" ry="12" fill="currentColor" opacity="0.25"></ellipse>
+                <path d="M16 48c10-20 22-28 34-26 4 12 12 12 18 4 10-10 24-6 34 10 6 8 12 12 16 12H16z" fill="currentColor"></path>
+              </svg>
+              <span class="station-code">IS</span>
+              <span class="station-name">綜合科學</span>
+              <span class="station-blurb">從日常生活走進科學</span>
+              <span class="station-count" data-count="is">遊戲載入中</span>
+            </a>
+          </li>
+          <li>
+            <a class="station station-chem" href="chem/">
+              <svg class="station-icon" viewBox="0 0 120 70" aria-hidden="true">
+                <ellipse cx="60" cy="50" rx="46" ry="12" fill="currentColor" opacity="0.25"></ellipse>
+                <path d="M18 50c8-16 16-30 28-30 8 0 10 10 18 10s12-16 24-12c10 4 16 18 22 32H18z" fill="currentColor"></path>
+              </svg>
+              <span class="station-code">CHEM</span>
+              <span class="station-name">化學</span>
+              <span class="station-blurb">認識物質與變化</span>
+              <span class="station-count" data-count="chem">遊戲載入中</span>
+            </a>
+          </li>
+          <li>
+            <a class="station station-bio" href="bio/">
+              <svg class="station-icon" viewBox="0 0 120 70" aria-hidden="true">
+                <ellipse cx="60" cy="50" rx="46" ry="12" fill="currentColor" opacity="0.25"></ellipse>
+                <path d="M14 46c12-8 18-24 30-24 8 0 12 8 20 8 10 0 14-14 26-10 12 4 18 16 22 26H14z" fill="currentColor"></path>
+              </svg>
+              <span class="station-code">BIO</span>
+              <span class="station-name">生物</span>
+              <span class="station-blurb">探索生命的構造</span>
+              <span class="station-count" data-count="bio">遊戲載入中</span>
+            </a>
+          </li>
+        </ol>
+      </section>
+      <noscript><p class="noscript">請啟用 JavaScript，才能載入最新的首頁介紹和遊戲數目。</p></noscript>
+    </main>
+    <footer class="site-footer">
+      <a href="admin/">管理員登入</a>
+    </footer>
+  </div>
+  <script type="module" src="js/home.js"></script>
+</body>
+</html>
