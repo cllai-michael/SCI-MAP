@@ -1,12 +1,12 @@
 {
   "games": [
     {
-      "id": "states-of-matter",
-      "name": "物質三態",
-      "description": "判斷日常現象屬於固體、液體還是氣體，看看你有多熟悉物質的狀態。",
-      "subject": "is",
+      "id": "animal-cell",
+      "name": "動物細胞",
+      "description": "認識動物細胞的基本部分，看看你能不能對上名稱和功能。",
+      "subject": "bio",
       "order": 1,
-      "file": "games/states-of-matter/index.html",
+      "file": "games/animal-cell/index.html",
       "updatedAt": "2026-10-06T00:00:00.000Z"
     },
     {
@@ -19,13 +19,22 @@
       "updatedAt": "2026-10-06T00:00:00.000Z"
     },
     {
-      "id": "animal-cell",
-      "name": "動物細胞",
-      "description": "認識動物細胞的基本部分，看看你能不能對上名稱和功能。",
-      "subject": "bio",
+      "id": "states-of-matter",
+      "name": "物質三態",
+      "description": "判斷日常現象屬於固體、液體還是氣體，看看你有多熟悉物質的狀態。",
+      "subject": "is",
       "order": 1,
-      "file": "games/animal-cell/index.html",
+      "file": "games/states-of-matter/index.html",
       "updatedAt": "2026-10-06T00:00:00.000Z"
+    },
+    {
+      "id": "game-muy2e31t-9puv",
+      "name": "1A 地球 石灰循環《石灰循環守護者：化學鍊成對決》",
+      "description": "是互動化學遊戲，學生透過任務及自由沙盒，探索石灰循環，觀察加熱、加水和通入二氧化碳的反應。",
+      "subject": "chem",
+      "order": 2,
+      "file": "games/game-muy2e31t-9puv/index.html",
+      "updatedAt": "2026-10-07T12:09:06.544Z"
     }
   ]
 }

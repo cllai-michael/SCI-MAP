@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<!-- saved from url=(0112)file:///private/var/folders/vg/846zblg11pq5clxkpr2whg4r0000gn/T/canvas-3E61C7E1-4701-4EB2-9389-F98B558C8782.html -->
+<html lang="zh-HK"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>石灰循環守護者：化學鍊成對決</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="./石灰循環守護者：化學鍊成對決_v2_files/saved_resource"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700;900&display=swap');
+    
+    * {
+      font-family: 'Noto Sans TC', system-ui, -apple-system, sans-serif;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    /* 呼吸燈與光暈動畫 */
+    .glow-pulse {
+      animation: pulseGlow 2s infinite alternate;
+    }
+    @keyframes pulseGlow {
+      from { box-shadow: 0 0 10px rgba(59, 130, 246, 0.4); }
+      to { box-shadow: 0 0 26px rgba(59, 130, 246, 0.95); }
+    }
+
+    .weakness-glow {
+      animation: pulseWeakness 1.4s infinite alternate;
+    }
+    @keyframes pulseWeakness {
+      from { box-shadow: 0 0 8px rgba(245, 158, 11, 0.5); }
+      to { box-shadow: 0 0 25px rgba(245, 158, 11, 1); }
+    }
+
+    /* 怪獸待機律動 */
+    .monster-float {
+      animation: monsterBob 3.5s ease-in-out infinite;
+    }
+    @keyframes monsterBob {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-10px) scale(1.02); }
+    }
+
+    /* 受擊震動與閃白 */
+    .shake {
+      animation: shakeAnim 0.38s cubic-bezier(.36,.07,.19,.97) both;
+    }
+    @keyframes shakeAnim {
+      10%, 90% { transform: translate3d(-3px, 0, 0); }
+      20%, 80% { transform: translate3d(5px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-7px, 0, 0); }
+      40%, 60% { transform: translate3d(7px, 0, 0); }
+    }
+
+    .monster-hit {
+      animation: hitFlashAnim 0.45s ease-out;
+    }
+    @keyframes hitFlashAnim {
+      0% { filter: brightness(3) contrast(2) drop-shadow(0 0 30px #ffffff); transform: scale(0.9); }
+      50% { filter: brightness(1.7) contrast(1.3); transform: scale(1.06); }
+      100% { filter: brightness(1) contrast(1); transform: scale(1); }
+    }
+
+    /* 泡騰氣泡上升特效 */
+    .effervescence-bubble {
+      position: absolute;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.4));
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: bubbleRise 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    @keyframes bubbleRise {
+      0% { transform: translateY(0) scale(0.3); opacity: 0.9; }
+      100% { transform: translateY(-70px) scale(1.2); opacity: 0; }
+    }
+
+    /* 熱氣蒸氣動畫 */
+    .steam-wave {
+      position: absolute;
+      width: 6px;
+      height: 25px;
+      background: linear-gradient(to top, rgba(255,255,255,0.7), transparent);
+      border-radius: 4px;
+      filter: blur(1px);
+      animation: steamRise 1.4s ease-out infinite;
+    }
+    @keyframes steamRise {
+      0% { transform: translateY(0) scaleX(1); opacity: 0.8; }
+      100% { transform: translateY(-40px) scaleX(2.5); opacity: 0; }
+    }
+
+    /* 彈道飛行容器 */
+    .projectile {
+      position: fixed;
+      pointer-events: none;
+      z-index: 100;
+      transition: all 0.52s cubic-bezier(0.2, 0.8, 0.2, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 拖曳感應反饋 */
+    .drag-target-hover {
+      border-color: #38bdf8 !important;
+      background-color: rgba(14, 165, 233, 0.2) !important;
+      transform: scale(1.02);
+    }
+  </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0px}.-right-10{right:-2.5rem}.-top-10{top:-2.5rem}.-top-3{top:-0.75rem}.right-4{right:1rem}.top-4{top:1rem}.z-10{z-index:10}.z-20{z-index:20}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.my-auto{margin-top:auto;margin-bottom:auto}.mb-1{margin-bottom:0.25rem}.mb-2\.5{margin-bottom:0.625rem}.mb-3{margin-bottom:0.75rem}.mt-1{margin-top:0.25rem}.mb-1\.5{margin-bottom:0.375rem}.mb-2{margin-bottom:0.5rem}.mb-4{margin-bottom:1rem}.mt-0\.5{margin-top:0.125rem}.mt-2{margin-top:0.5rem}.mt-2\.5{margin-top:0.625rem}.mt-4{margin-top:1rem}.flex{display:flex}.grid{display:grid}.hidden{display:none}.aspect-square{aspect-ratio:1 / 1}.h-20{height:5rem}.h-3{height:0.75rem}.h-32{height:8rem}.h-4{height:1rem}.h-60{height:15rem}.h-full{height:100%}.h-14{height:3.5rem}.max-h-\[90vh\]{max-height:90vh}.min-h-screen{min-height:100vh}.min-h-\[165px\]{min-height:165px}.min-h-\[54px\]{min-height:54px}.w-16{width:4rem}.w-32{width:8rem}.w-60{width:15rem}.w-full{width:100%}.w-14{width:3.5rem}.max-w-5xl{max-width:64rem}.max-w-\[280px\]{max-width:280px}.max-w-lg{max-width:32rem}.max-w-md{max-width:28rem}.flex-1{flex:1 1 0%}.rotate-45{--tw-rotate:45deg;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}@keyframes bounce{0%, 100%{transform:translateY(-25%);animation-timing-function:cubic-bezier(0.8,0,1,1)}50%{transform:none;animation-timing-function:cubic-bezier(0,0,0.2,1)}}.animate-bounce{animation:bounce 1s infinite}@keyframes spin{to{transform:rotate(360deg)}}.animate-spin{animation:spin 1s linear infinite}.cursor-grab{cursor:grab}.cursor-not-allowed{cursor:not-allowed}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.grid-cols-5{grid-template-columns:repeat(5, minmax(0, 1fr))}.grid-rows-3{grid-template-rows:repeat(3, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.justify-items-center{justify-items:center}.gap-1{gap:0.25rem}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-2\.5{gap:0.625rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.space-y-1\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.375rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.375rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.overflow-x-hidden{overflow-x:hidden}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.rounded-3xl{border-radius:1.5rem}.rounded-md{border-radius:0.375rem}.border{border-width:1px}.border-2{border-width:2px}.border-b{border-bottom-width:1px}.border-dashed{border-style:dashed}.border-amber-400\/70{border-color:rgb(251 191 36 / 0.7)}.border-amber-500\/60{border-color:rgb(245 158 11 / 0.6)}.border-blue-500\/40{border-color:rgb(59 130 246 / 0.4)}.border-blue-500\/50{border-color:rgb(59 130 246 / 0.5)}.border-indigo-500\/30{border-color:rgb(99 102 241 / 0.3)}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85 / var(--tw-border-opacity, 1))}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59 / var(--tw-border-opacity, 1))}.border-blue-400{--tw-border-opacity:1;border-color:rgb(96 165 250 / var(--tw-border-opacity, 1))}.border-blue-500{--tw-border-opacity:1;border-color:rgb(59 130 246 / var(--tw-border-opacity, 1))}.border-cyan-500\/40{border-color:rgb(6 182 212 / 0.4)}.border-emerald-500\/40{border-color:rgb(16 185 129 / 0.4)}.border-orange-500\/40{border-color:rgb(249 115 22 / 0.4)}.border-purple-500\/40{border-color:rgb(168 85 247 / 0.4)}.border-red-400\/30{border-color:rgb(248 113 113 / 0.3)}.border-teal-500\/40{border-color:rgb(20 184 166 / 0.4)}.border-amber-300{--tw-border-opacity:1;border-color:rgb(252 211 77 / var(--tw-border-opacity, 1))}.border-emerald-500\/60{border-color:rgb(16 185 129 / 0.6)}.border-white{--tw-border-opacity:1;border-color:rgb(255 255 255 / var(--tw-border-opacity, 1))}.border-rose-500\/60{border-color:rgb(244 63 94 / 0.6)}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23 / var(--tw-bg-opacity, 1))}.bg-amber-500\/25{background-color:rgb(245 158 11 / 0.25)}.bg-blue-600\/20{background-color:rgb(37 99 235 / 0.2)}.bg-cyan-500\/10{background-color:rgb(6 182 212 / 0.1)}.bg-indigo-500\/20{background-color:rgb(99 102 241 / 0.2)}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.bg-slate-900\/90{background-color:rgb(15 23 42 / 0.9)}.bg-slate-900\/95{background-color:rgb(15 23 42 / 0.95)}.bg-slate-950\/80{background-color:rgb(2 6 23 / 0.8)}.bg-black\/80{background-color:rgb(0 0 0 / 0.8)}.bg-black\/85{background-color:rgb(0 0 0 / 0.85)}.bg-blue-600{--tw-bg-opacity:1;background-color:rgb(37 99 235 / var(--tw-bg-opacity, 1))}.bg-blue-900\/50{background-color:rgb(30 58 138 / 0.5)}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.bg-slate-900\/70{background-color:rgb(15 23 42 / 0.7)}.bg-slate-950\/60{background-color:rgb(2 6 23 / 0.6)}.bg-slate-950\/90{background-color:rgb(2 6 23 / 0.9)}.bg-blue-900\/60{background-color:rgb(30 58 138 / 0.6)}.bg-emerald-950\/90{background-color:rgb(2 44 34 / 0.9)}.bg-amber-950\/90{background-color:rgb(69 26 3 / 0.9)}.bg-emerald-500\/10{background-color:rgb(16 185 129 / 0.1)}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249 / var(--tw-bg-opacity, 1))}.bg-amber-500\/15{background-color:rgb(245 158 11 / 0.15)}.bg-rose-950\/90{background-color:rgb(76 5 25 / 0.9)}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.bg-gradient-to-b{background-image:linear-gradient(to bottom, var(--tw-gradient-stops))}.from-amber-500\/10{--tw-gradient-from:rgb(245 158 11 / 0.1) var(--tw-gradient-from-position);--tw-gradient-to:rgb(245 158 11 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-blue-400{--tw-gradient-from:#60a5fa var(--tw-gradient-from-position);--tw-gradient-to:rgb(96 165 250 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-emerald-500{--tw-gradient-from:#10b981 var(--tw-gradient-from-position);--tw-gradient-to:rgb(16 185 129 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-rose-500{--tw-gradient-from:#f43f5e var(--tw-gradient-from-position);--tw-gradient-to:rgb(244 63 94 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-blue-600{--tw-gradient-from:#2563eb var(--tw-gradient-from-position);--tw-gradient-to:rgb(37 99 235 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-cyan-950\/40{--tw-gradient-from:rgb(8 51 68 / 0.4) var(--tw-gradient-from-position);--tw-gradient-to:rgb(8 51 68 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-emerald-950\/40{--tw-gradient-from:rgb(2 44 34 / 0.4) var(--tw-gradient-from-position);--tw-gradient-to:rgb(2 44 34 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-orange-950\/40{--tw-gradient-from:rgb(67 20 7 / 0.4) var(--tw-gradient-from-position);--tw-gradient-to:rgb(67 20 7 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-purple-950\/40{--tw-gradient-from:rgb(59 7 100 / 0.4) var(--tw-gradient-from-position);--tw-gradient-to:rgb(59 7 100 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-red-600{--tw-gradient-from:#dc2626 var(--tw-gradient-from-position);--tw-gradient-to:rgb(220 38 38 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-slate-900{--tw-gradient-from:#0f172a var(--tw-gradient-from-position);--tw-gradient-to:rgb(15 23 42 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-teal-950\/40{--tw-gradient-from:rgb(4 47 46 / 0.4) var(--tw-gradient-from-position);--tw-gradient-to:rgb(4 47 46 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-amber-500{--tw-gradient-from:#f59e0b var(--tw-gradient-from-position);--tw-gradient-to:rgb(245 158 11 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-amber-300{--tw-gradient-from:#fcd34d var(--tw-gradient-from-position);--tw-gradient-to:rgb(252 211 77 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-slate-100{--tw-gradient-from:#f1f5f9 var(--tw-gradient-from-position);--tw-gradient-to:rgb(241 245 249 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-emerald-300{--tw-gradient-from:#6ee7b7 var(--tw-gradient-from-position);--tw-gradient-to:rgb(110 231 183 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-white{--tw-gradient-from:#fff var(--tw-gradient-from-position);--tw-gradient-to:rgb(255 255 255 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-amber-500\/20{--tw-gradient-to:rgb(245 158 11 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), rgb(245 158 11 / 0.2) var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-red-500{--tw-gradient-to:rgb(239 68 68 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #ef4444 var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-teal-300{--tw-gradient-to:rgb(94 234 212 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #5eead4 var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-orange-500{--tw-gradient-to:rgb(249 115 22 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #f97316 var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-sky-300{--tw-gradient-to:rgb(125 211 252 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #7dd3fc var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-teal-400{--tw-gradient-to:rgb(45 212 191 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #2dd4bf var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-cyan-200{--tw-gradient-to:rgb(165 243 252 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #a5f3fc var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-amber-500{--tw-gradient-to:#f59e0b var(--tw-gradient-to-position)}.to-amber-500\/10{--tw-gradient-to:rgb(245 158 11 / 0.1) var(--tw-gradient-to-position)}.to-indigo-300{--tw-gradient-to:#a5b4fc var(--tw-gradient-to-position)}.to-teal-400{--tw-gradient-to:#2dd4bf var(--tw-gradient-to-position)}.to-indigo-600{--tw-gradient-to:#4f46e5 var(--tw-gradient-to-position)}.to-rose-600{--tw-gradient-to:#e11d48 var(--tw-gradient-to-position)}.to-slate-900{--tw-gradient-to:#0f172a var(--tw-gradient-to-position)}.to-slate-950{--tw-gradient-to:#020617 var(--tw-gradient-to-position)}.to-yellow-500{--tw-gradient-to:#eab308 var(--tw-gradient-to-position)}.to-red-600{--tw-gradient-to:#dc2626 var(--tw-gradient-to-position)}.to-blue-400{--tw-gradient-to:#60a5fa var(--tw-gradient-to-position)}.to-cyan-500{--tw-gradient-to:#06b6d4 var(--tw-gradient-to-position)}.to-sky-400{--tw-gradient-to:#38bdf8 var(--tw-gradient-to-position)}.bg-clip-text{-webkit-background-clip:text;background-clip:text}.p-2{padding:0.5rem}.p-0\.5{padding:0.125rem}.p-2\.5{padding:0.625rem}.p-3{padding:0.75rem}.p-3\.5{padding:0.875rem}.p-4{padding:1rem}.p-1{padding:0.25rem}.p-1\.5{padding:0.375rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.px-4{padding-left:1rem;padding-right:1rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.pb-2{padding-bottom:0.5rem}.text-left{text-align:left}.text-center{text-align:center}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.text-2xl{font-size:1.5rem;line-height:2rem}.text-\[11px\]{font-size:11px}.text-base{font-size:1rem;line-height:1.5rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.text-6xl{font-size:3.75rem;line-height:1}.text-\[10px\]{font-size:10px}.text-\[9px\]{font-size:9px}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-\[13px\]{font-size:13px}.text-3xl{font-size:1.875rem;line-height:2.25rem}.font-black{font-weight:900}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.leading-relaxed{line-height:1.625}.leading-tight{line-height:1.25}.leading-none{line-height:1}.tracking-wide{letter-spacing:0.025em}.tracking-wider{letter-spacing:0.05em}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249 / var(--tw-text-opacity, 1))}.text-amber-300{--tw-text-opacity:1;color:rgb(252 211 77 / var(--tw-text-opacity, 1))}.text-amber-300\/90{color:rgb(252 211 77 / 0.9)}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36 / var(--tw-text-opacity, 1))}.text-blue-300{--tw-text-opacity:1;color:rgb(147 197 253 / var(--tw-text-opacity, 1))}.text-blue-400{--tw-text-opacity:1;color:rgb(96 165 250 / var(--tw-text-opacity, 1))}.text-emerald-300{--tw-text-opacity:1;color:rgb(110 231 183 / var(--tw-text-opacity, 1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-indigo-300{--tw-text-opacity:1;color:rgb(165 180 252 / var(--tw-text-opacity, 1))}.text-rose-300{--tw-text-opacity:1;color:rgb(253 164 175 / var(--tw-text-opacity, 1))}.text-rose-400{--tw-text-opacity:1;color:rgb(251 113 133 / var(--tw-text-opacity, 1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240 / var(--tw-text-opacity, 1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-transparent{color:transparent}.text-amber-200{--tw-text-opacity:1;color:rgb(253 230 138 / var(--tw-text-opacity, 1))}.text-blue-200{--tw-text-opacity:1;color:rgb(191 219 254 / var(--tw-text-opacity, 1))}.text-cyan-200{--tw-text-opacity:1;color:rgb(165 243 252 / var(--tw-text-opacity, 1))}.text-cyan-300{--tw-text-opacity:1;color:rgb(103 232 249 / var(--tw-text-opacity, 1))}.text-cyan-400{--tw-text-opacity:1;color:rgb(34 211 238 / var(--tw-text-opacity, 1))}.text-emerald-200{--tw-text-opacity:1;color:rgb(167 243 208 / var(--tw-text-opacity, 1))}.text-orange-200{--tw-text-opacity:1;color:rgb(254 215 170 / var(--tw-text-opacity, 1))}.text-orange-400{--tw-text-opacity:1;color:rgb(251 146 60 / var(--tw-text-opacity, 1))}.text-purple-200{--tw-text-opacity:1;color:rgb(233 213 255 / var(--tw-text-opacity, 1))}.text-purple-300{--tw-text-opacity:1;color:rgb(216 180 254 / var(--tw-text-opacity, 1))}.text-purple-400{--tw-text-opacity:1;color:rgb(192 132 252 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-teal-200{--tw-text-opacity:1;color:rgb(153 246 228 / var(--tw-text-opacity, 1))}.text-teal-300{--tw-text-opacity:1;color:rgb(94 234 212 / var(--tw-text-opacity, 1))}.text-teal-400{--tw-text-opacity:1;color:rgb(45 212 191 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-emerald-100{--tw-text-opacity:1;color:rgb(209 250 229 / var(--tw-text-opacity, 1))}.text-slate-950{--tw-text-opacity:1;color:rgb(2 6 23 / var(--tw-text-opacity, 1))}.text-amber-100{--tw-text-opacity:1;color:rgb(254 243 199 / var(--tw-text-opacity, 1))}.text-rose-200{--tw-text-opacity:1;color:rgb(254 205 211 / var(--tw-text-opacity, 1))}.opacity-0{opacity:0}.opacity-70{opacity:0.7}.opacity-80{opacity:0.8}.opacity-50{opacity:0.5}.shadow{--tw-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-\[0_0_30px_\#f97316\]{--tw-shadow:0 0 30px #f97316;--tw-shadow-colored:0 0 30px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-\[0_0_30px_\#bae6fd\]{--tw-shadow:0 0 30px #bae6fd;--tw-shadow-colored:0 0 30px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-\[0_0_30px_\#ffffff\]{--tw-shadow:0 0 30px #ffffff;--tw-shadow-colored:0 0 30px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-\[0_0_30px_\#6ee7b7\]{--tw-shadow:0 0 30px #6ee7b7;--tw-shadow-colored:0 0 30px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-\[0_0_30px_\#e0f2fe\]{--tw-shadow:0 0 30px #e0f2fe;--tw-shadow-colored:0 0 30px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.blur-3xl{--tw-blur:blur(64px);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.drop-shadow{--tw-drop-shadow:drop-shadow(0 1px 2px rgb(0 0 0 / 0.1)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.06));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.drop-shadow-\[0_2px_12px_rgba\(245\2c 158\2c 11\2c 0\.9\)\]{--tw-drop-shadow:drop-shadow(0 2px 12px rgba(245,158,11,0.9));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.drop-shadow-lg{--tw-drop-shadow:drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.drop-shadow-\[0_0_20px_rgba\(56\2c 189\2c 248\2c 0\.7\)\]{--tw-drop-shadow:drop-shadow(0 0 20px rgba(56,189,248,0.7));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.drop-shadow-sm{--tw-drop-shadow:drop-shadow(0 1px 1px rgb(0 0 0 / 0.05));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.drop-shadow-\[0_0_20px_rgba\(74\2c 222\2c 128\2c 0\.7\)\]{--tw-drop-shadow:drop-shadow(0 0 20px rgba(74,222,128,0.7));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.drop-shadow-\[0_0_25px_rgba\(245\2c 158\2c 11\2c 0\.8\)\]{--tw-drop-shadow:drop-shadow(0 0 25px rgba(245,158,11,0.8));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.filter{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur{--tw-backdrop-blur:blur(8px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-opacity{transition-property:opacity;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-200{transition-duration:200ms}.duration-300{transition-duration:300ms}.duration-700{transition-duration:700ms}.duration-500{transition-duration:500ms}.selection\:bg-blue-600 *::selection{--tw-bg-opacity:1;background-color:rgb(37 99 235 / var(--tw-bg-opacity, 1))}.selection\:bg-blue-600::selection{--tw-bg-opacity:1;background-color:rgb(37 99 235 / var(--tw-bg-opacity, 1))}.hover\:border-cyan-400:hover{--tw-border-opacity:1;border-color:rgb(34 211 238 / var(--tw-border-opacity, 1))}.hover\:border-emerald-400:hover{--tw-border-opacity:1;border-color:rgb(52 211 153 / var(--tw-border-opacity, 1))}.hover\:border-orange-400:hover{--tw-border-opacity:1;border-color:rgb(251 146 60 / var(--tw-border-opacity, 1))}.hover\:border-purple-400:hover{--tw-border-opacity:1;border-color:rgb(192 132 252 / var(--tw-border-opacity, 1))}.hover\:border-teal-400:hover{--tw-border-opacity:1;border-color:rgb(45 212 191 / var(--tw-border-opacity, 1))}.hover\:bg-blue-600\/40:hover{background-color:rgb(37 99 235 / 0.4)}.hover\:bg-slate-700:hover{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.hover\:bg-blue-500:hover{--tw-bg-opacity:1;background-color:rgb(59 130 246 / var(--tw-bg-opacity, 1))}.hover\:bg-cyan-900\/40:hover{background-color:rgb(22 78 99 / 0.4)}.hover\:bg-emerald-900\/40:hover{background-color:rgb(6 78 59 / 0.4)}.hover\:bg-orange-900\/40:hover{background-color:rgb(124 45 18 / 0.4)}.hover\:bg-purple-900\/40:hover{background-color:rgb(88 28 135 / 0.4)}.hover\:bg-teal-900\/40:hover{background-color:rgb(19 78 74 / 0.4)}.hover\:from-blue-500:hover{--tw-gradient-from:#3b82f6 var(--tw-gradient-from-position);--tw-gradient-to:rgb(59 130 246 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.hover\:from-red-500:hover{--tw-gradient-from:#ef4444 var(--tw-gradient-from-position);--tw-gradient-to:rgb(239 68 68 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.hover\:to-indigo-500:hover{--tw-gradient-to:#6366f1 var(--tw-gradient-to-position)}.hover\:to-rose-500:hover{--tw-gradient-to:#f43f5e var(--tw-gradient-to-position)}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.hover\:brightness-110:hover{--tw-brightness:brightness(1.1);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.active\:scale-95:active{--tw-scale-x:.95;--tw-scale-y:.95;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:scale-110{--tw-scale-x:1.1;--tw-scale-y:1.1;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@media (min-width: 640px){.sm\:h-36{height:9rem}.sm\:w-36{width:9rem}.sm\:gap-2{gap:0.5rem}.sm\:p-4{padding:1rem}.sm\:py-3{padding-top:0.75rem;padding-bottom:0.75rem}.sm\:text-3xl{font-size:1.875rem;line-height:2.25rem}.sm\:text-base{font-size:1rem;line-height:1.5rem}.sm\:text-lg{font-size:1.125rem;line-height:1.75rem}.sm\:text-sm{font-size:0.875rem;line-height:1.25rem}.sm\:text-2xl{font-size:1.5rem;line-height:2rem}.sm\:text-\[11px\]{font-size:11px}}@media (min-width: 768px){.md\:col-span-4{grid-column:span 4 / span 4}.md\:col-span-8{grid-column:span 8 / span 8}.md\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}}@media (min-width: 1024px){.lg\:col-span-7{grid-column:span 7 / span 7}.lg\:col-span-5{grid-column:span 5 / span 5}.lg\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}}</style></head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col items-center justify-between p-2 sm:p-4 selection:bg-blue-600 relative overflow-x-hidden">
+
+  <!-- 彈道飛行層 -->
+  <div id="projectile-layer" class="fixed inset-0 pointer-events-none z-50 overflow-hidden"></div>
+
+  <!-- 頂部導航與工具列 -->
+  <header class="w-full max-w-5xl flex items-center justify-between bg-slate-900/90 backdrop-blur px-4 py-3 rounded-2xl border border-slate-800 shadow-2xl mb-3">
+    <div class="flex items-center gap-2.5">
+      <span class="text-2xl sm:text-3xl filter drop-shadow">⚗️</span>
+      <div>
+        <h1 class="font-black text-base sm:text-lg bg-gradient-to-r from-blue-400 via-teal-300 to-indigo-300 bg-clip-text text-transparent">
+          石灰循環守護者：化學鍊成對決
+        </h1>
+        <p class="text-xs text-slate-400 font-medium">初中化學對戰模擬系統（完全依據 1A 化學筆記總結）</p>
+      </div>
+    </div>
+    
+    <div class="flex items-center gap-2">
+      <button onclick="toggleAudio()" id="sound-btn" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 transition text-sm flex items-center gap-1 border border-slate-700 active:scale-95 shadow" title="切換音效">
+        <span id="sound-icon">🔊</span>
+      </button>
+      <button onclick="openNoteModal()" class="px-3 py-1.5 rounded-xl bg-blue-600/20 hover:bg-blue-600/40 text-blue-300 border border-blue-500/40 text-xs sm:text-sm font-semibold transition flex items-center gap-1 active:scale-95 shadow">
+        📖 反應圖鑑
+      </button>
+      <button onclick="resetGame()" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs sm:text-sm font-semibold transition active:scale-95 shadow">
+        🔄 重玩
+      </button>
+    </div>
+  </header>
+
+  <!-- 主遊戲區域 -->
+  <main class="w-full max-w-5xl flex-1 flex flex-col gap-3">
+    
+    <!-- 1. 戰鬥資訊儀表板 (Monster & Player HUD) -->
+    <div class="bg-slate-900/95 rounded-2xl border border-slate-800 p-4 shadow-2xl relative overflow-hidden">
+      <div id="monster-glow-bg" class="absolute -right-10 -top-10 w-60 h-60 rounded-full blur-3xl pointer-events-none transition-colors duration-700 bg-cyan-500/10"></div>
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+        
+        <!-- 怪獸精緻 SVG 展演區 -->
+        <div class="md:col-span-4 flex flex-col items-center justify-center p-3 bg-slate-950/80 rounded-2xl border border-slate-800 relative shadow-inner">
+          
+          <div id="monster-container" class="relative w-32 h-32 sm:w-36 sm:h-36 flex items-center justify-center monster-float">
+            <!-- 動態插入精緻向量怪獸 -->
+            <div id="monster-svg-slot" class="w-full h-full flex items-center justify-center">
+        <svg viewBox="0 0 140 140" class="w-full h-full filter drop-shadow-[0_0_20px_rgba(56,189,248,0.7)]">
+          <defs>
+            <radialgradient id="frostBody" cx="45%" cy="35%" r="65%"><stop offset="0%" stop-color="#e0f2fe"></stop><stop offset="45%" stop-color="#38bdf8"></stop><stop offset="85%" stop-color="#0284c7"></stop><stop offset="100%" stop-color="#082f49"></stop></radialgradient>
+            <lineargradient id="iceSpikeGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffffff"></stop><stop offset="60%" stop-color="#7dd3fc"></stop><stop offset="100%" stop-color="#0369a1"></stop></lineargradient>
+          </defs>
+          <polygon points="70,8 58,35 82,35" fill="url(#iceSpikeGrad)" stroke="#e0f2fe" stroke-width="1.5"></polygon>
+          <polygon points="36,20 28,48 50,42" fill="url(#iceSpikeGrad)" stroke="#e0f2fe" stroke-width="1.5"></polygon>
+          <polygon points="104,20 90,42 112,48" fill="url(#iceSpikeGrad)" stroke="#e0f2fe" stroke-width="1.5"></polygon>
+          <polygon points="18,48 12,70 32,62" fill="url(#iceSpikeGrad)" stroke="#e0f2fe" stroke-width="1.5"></polygon>
+          <polygon points="122,48 108,62 128,70" fill="url(#iceSpikeGrad)" stroke="#e0f2fe" stroke-width="1.5"></polygon>
+          <path d="M24,92 Q12,50 70,40 Q128,50 116,92 Q110,126 70,122 Q30,126 24,92 Z" fill="url(#frostBody)"></path>
+          <path d="M35,62 Q70,48 105,62" stroke="#ffffff" stroke-width="2.5" fill="none" opacity="0.6" stroke-linecap="round"></path>
+          <ellipse cx="70" cy="52" rx="20" ry="6" fill="#ffffff" opacity="0.3"></ellipse>
+          <ellipse cx="50" cy="76" rx="10" ry="14" fill="#ffffff"></ellipse><circle cx="52" cy="76" r="6.5" fill="#0284c7"></circle><circle cx="55" cy="73" r="2.8" fill="#ffffff"></circle>
+          <ellipse cx="90" cy="76" rx="10" ry="14" fill="#ffffff"></ellipse><circle cx="88" cy="76" r="6.5" fill="#0284c7"></circle><circle cx="91" cy="73" r="2.8" fill="#ffffff"></circle>
+          <path d="M58,98 Q70,108 82,98" stroke="#bae6fd" stroke-width="3.5" fill="none" stroke-linecap="round"></path>
+        </svg>
+      </div>
+
+            <!-- 受擊飄字 -->
+            <div id="dmg-popup" class="absolute -top-3 font-black text-2xl text-amber-400 opacity-0 transition-all pointer-events-none drop-shadow-[0_2px_12px_rgba(245,158,11,0.9)] z-20" style="opacity: 0; transform: translateY(0px);">-50 淨化打擊！</div>
+          </div>
+
+          <span id="stage-badge" class="mt-1 text-[11px] font-bold px-3 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 tracking-wide">關卡 1 / 3</span>
+          <h2 id="monster-name" class="font-black text-base text-slate-200 mt-1 tracking-wide">寒霜晶怪</h2>
+        </div>
+
+        <!-- 血條與當前弱點指示 -->
+        <div class="md:col-span-8 flex flex-col gap-3">
+          <!-- 怪獸 HP -->
+          <div>
+            <div class="flex justify-between text-xs sm:text-sm font-bold mb-1">
+              <span class="text-rose-400 flex items-center gap-1.5">
+                <span class="animate-pulse">👾</span> 怪獸體力
+              </span>
+              <span id="monster-hp-label" class="text-rose-300 font-mono tracking-wider">100 / 100</span>
+            </div>
+            <div class="w-full bg-slate-950 h-4 rounded-full overflow-hidden p-0.5 border border-slate-800 shadow-inner">
+              <div id="monster-hp-bar" class="h-full bg-gradient-to-r from-rose-500 via-red-500 to-amber-500 rounded-full transition-all duration-300 w-full shadow" style="width: 100%;"></div>
+            </div>
+          </div>
+
+          <!-- 玩家 HP -->
+          <div>
+            <div class="flex justify-between text-xs sm:text-sm font-bold mb-1">
+              <span class="text-emerald-400 flex items-center gap-1.5">
+                <span>🛡️</span> 守護者屏障
+              </span>
+              <span id="player-hp-label" class="text-emerald-300 font-mono tracking-wider">100 / 100</span>
+            </div>
+            <div class="w-full bg-slate-950 h-3 rounded-full overflow-hidden p-0.5 border border-slate-800 shadow-inner">
+              <div id="player-hp-bar" class="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-300 w-full shadow" style="width: 100%;"></div>
+            </div>
+          </div>
+
+          <!-- 關鍵弱點橫幅 -->
+          <div class="bg-gradient-to-r from-amber-500/10 via-amber-500/20 to-amber-500/10 border-2 border-dashed border-amber-500/60 rounded-xl p-2.5 flex items-center justify-between gap-2 shadow-inner">
+            <div class="flex items-center gap-2">
+              <span class="text-xl">🎯</span>
+              <div>
+                <div class="text-[11px] font-semibold text-amber-300/90">任務目標：請製備化學物</div>
+                <div id="goal-hint" class="text-xs text-slate-300">由目前狀態轉化出：</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-1.5 bg-amber-500/25 border border-amber-400/70 px-3.5 py-1.5 rounded-xl shadow">
+              <span id="target-chemical-name" class="font-black text-amber-300 text-sm sm:text-base tracking-wider drop-shadow">氧化鈣</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. 中間核心區：實驗室操作台 (左) 與 石灰循環十字地圖 (右) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-3">
+      
+      <!-- 左側：中央實驗操作台 (真實化學燒杯與正下方的試劑庫) -->
+      <div class="lg:col-span-7 bg-slate-900/95 rounded-2xl border border-slate-800 p-3.5 sm:p-4 flex flex-col justify-between shadow-2xl relative">
+        
+        <div>
+          <!-- 頂部標題與重置樣本按鈕 -->
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2 mb-2.5">
+            <div class="flex items-center gap-2">
+              <span class="text-blue-400 text-base sm:text-lg">🧪</span>
+              <span class="font-bold text-xs sm:text-sm text-slate-200">實驗反應爐（拖入或點擊下方試劑進行化學轉化）</span>
+            </div>
+            <button onclick="resetSample()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1 rounded-lg transition border border-slate-700 flex items-center gap-1 active:scale-95 shadow" title="重置回碳酸鈣起始狀態">
+              🔄 重取碳酸鈣
+            </button>
+          </div>
+
+          <!-- (A) 反應爐拖曳接收槽 (Drop Zone) -->
+          <div id="drop-zone" ondragover="handleDragOver(event)" ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)" class="border-2 border-dashed border-blue-500/50 bg-slate-950/80 rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center transition-all duration-200 min-h-[165px] relative overflow-hidden shadow-inner">
+            
+            <!-- 真實物理現象容器 (氣泡/沉澱/熱氣) -->
+            <div id="particle-container" class="absolute inset-0 pointer-events-none overflow-hidden"><div class="effervescence-bubble" style="width: 6.8129px; height: 6.8129px; left: 34.4817%; bottom: 18px; animation-delay: 0.0550645s;"></div><div class="effervescence-bubble" style="width: 8.85739px; height: 8.85739px; left: 31.0267%; bottom: 18px; animation-delay: 0.146285s;"></div><div class="effervescence-bubble" style="width: 5.13852px; height: 5.13852px; left: 19.2573%; bottom: 18px; animation-delay: 0.213888s;"></div><div class="effervescence-bubble" style="width: 9.98312px; height: 9.98312px; left: 21.6824%; bottom: 18px; animation-delay: 0.194494s;"></div><div class="effervescence-bubble" style="width: 10.0855px; height: 10.0855px; left: 64.6521%; bottom: 18px; animation-delay: 0.248311s;"></div><div class="effervescence-bubble" style="width: 8.48297px; height: 8.48297px; left: 54.2633%; bottom: 18px; animation-delay: 0.270378s;"></div><div class="effervescence-bubble" style="width: 6.09027px; height: 6.09027px; left: 66.8028%; bottom: 18px; animation-delay: 0.173968s;"></div><div class="effervescence-bubble" style="width: 9.09256px; height: 9.09256px; left: 74.3913%; bottom: 18px; animation-delay: 0.0854737s;"></div><div class="effervescence-bubble" style="width: 5.46893px; height: 5.46893px; left: 15.7965%; bottom: 18px; animation-delay: 0.285492s;"></div><div class="effervescence-bubble" style="width: 9.62358px; height: 9.62358px; left: 64.6411%; bottom: 18px; animation-delay: 0.187009s;"></div><div class="effervescence-bubble" style="width: 9.65597px; height: 9.65597px; left: 75.261%; bottom: 18px; animation-delay: 0.263099s;"></div><div class="effervescence-bubble" style="width: 4.09881px; height: 4.09881px; left: 23.3381%; bottom: 18px; animation-delay: 0.378278s;"></div><div class="effervescence-bubble" style="width: 7.33302px; height: 7.33302px; left: 76.4254%; bottom: 18px; animation-delay: 0.189589s;"></div><div class="effervescence-bubble" style="width: 12.9374px; height: 12.9374px; left: 64.0804%; bottom: 18px; animation-delay: 0.255106s;"></div><div class="effervescence-bubble" style="width: 8.72166px; height: 8.72166px; left: 62.0476%; bottom: 18px; animation-delay: 0.364968s;"></div><div class="effervescence-bubble" style="width: 9.45568px; height: 9.45568px; left: 17.7639%; bottom: 18px; animation-delay: 0.307876s;"></div><div class="effervescence-bubble" style="width: 5.33791px; height: 5.33791px; left: 16.9297%; bottom: 18px; animation-delay: 0.226532s;"></div><div class="effervescence-bubble" style="width: 10.8488px; height: 10.8488px; left: 41.5394%; bottom: 18px; animation-delay: 0.241295s;"></div><div class="effervescence-bubble" style="width: 9.66498px; height: 9.66498px; left: 20.488%; bottom: 18px; animation-delay: 0.101621s;"></div><div class="effervescence-bubble" style="width: 12.8049px; height: 12.8049px; left: 57.6373%; bottom: 18px; animation-delay: 0.306666s;"></div><div class="effervescence-bubble" style="width: 5.84769px; height: 5.84769px; left: 31.3888%; bottom: 18px; animation-delay: 0.378575s;"></div><div class="effervescence-bubble" style="width: 11.5751px; height: 11.5751px; left: 57.6%; bottom: 18px; animation-delay: 0.0134554s;"></div></div>
+
+            <!-- 真實化學燒杯模擬 (準確體現固體沉澱與無色透明溶液) -->
+            <div class="flex items-center gap-4 z-10">
+              
+              <!-- 寫實化學錐形燒瓶 SVG -->
+              <div class="w-16 h-20 relative flex items-center justify-center">
+                <svg viewBox="0 0 100 120" class="w-full h-full filter drop-shadow-lg">
+                  <!-- 燒瓶玻璃外框與光澤 -->
+                  <path d="M38 10 L38 35 L12 98 A12 12 0 0 0 22 114 L78 114 A12 12 0 0 0 88 98 L62 35 L62 10 Z" fill="rgba(15, 23, 42, 0.7)" stroke="#64748b" stroke-width="3.5"></path>
+                  <!-- 刻度線 -->
+                  <line x1="38" y1="55" x2="48" y2="55" stroke="#475569" stroke-width="2"></line>
+                  <line x1="32" y1="75" x2="46" y2="75" stroke="#475569" stroke-width="2"></line>
+                  <line x1="24" y1="95" x2="44" y2="95" stroke="#475569" stroke-width="2"></line>
+                  
+                  <!-- 燒瓶內部溶液 (純透明水溶液層，真實化學為無色) -->
+                  <path id="flask-liquid" d="M16 98 L22 112 L78 112 L84 98 Q50 93 16 98 Z" fill="rgba(255, 255, 255, 0.05)" stroke="rgba(255,255,255,0.3)" stroke-width="1" class="transition-all duration-500"></path>
+                  
+                  <!-- 燒瓶底部固體沉澱/固體粉末層 (碳酸鈣/氧化鈣 白色沉澱層) -->
+                  <path id="flask-sediment" d="M22 105 L26 112 L74 112 L78 105 Q50 103 22 105 Z" fill="#ffffff" opacity="1" class="transition-all duration-500"></path>
+                  
+                  <!-- 玻璃高光反光條 -->
+                  <path d="M42 15 L42 35 L22 90" stroke="rgba(255,255,255,0.4)" stroke-width="2" fill="none" stroke-linecap="round"></path>
+                </svg>
+              </div>
+
+              <!-- 當前化學物大卡牌 -->
+              <div id="current-compound-card" class="bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-blue-400 rounded-xl px-5 py-2 text-center shadow-2xl transition-transform duration-200">
+                <div id="current-compound-name" class="text-lg sm:text-2xl font-black text-blue-200 tracking-wider">碳酸鈣</div>
+                <div class="flex items-center justify-center gap-2 mt-0.5">
+                  <span id="current-compound-formula" class="text-xs font-mono text-blue-400">CaCO₃</span>
+                  <span id="current-compound-state" class="text-[10px] px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 font-semibold border border-slate-700">白色固態・不溶</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-[11px] text-slate-400 mt-2.5 flex items-center gap-1 z-10 font-medium">
+              <span>⬇️</span> 將下方試劑拖入此處，或直接點選，完成化學轉化
+            </div>
+          </div>
+
+          <!-- (B) 試劑與條件卡牌庫 (緊貼在反應爐正下方) -->
+          <div class="mt-2.5">
+            <div class="text-[11px] font-bold text-slate-400 mb-1.5 flex items-center justify-between">
+              <span>🎒 反應條件／試劑：</span>
+              <span class="text-[10px] text-slate-500">無限次使用</span>
+            </div>
+            
+            <div class="grid grid-cols-5 gap-1.5 sm:gap-2">
+              
+              <button draggable="true" ondragstart="handleDragStart(event, &#39;強熱&#39;)" onclick="triggerReagent(&#39;強熱&#39;)" class="reagent-card group bg-gradient-to-b from-orange-950/40 to-slate-900 border border-orange-500/40 hover:border-orange-400 hover:bg-orange-900/40 p-1.5 rounded-xl flex flex-col items-center justify-center transition active:scale-95 shadow cursor-grab">
+                <span class="text-xl sm:text-2xl group-hover:scale-110 transition">🔥</span>
+                <span class="font-bold text-[10px] sm:text-[11px] text-orange-200 mt-0.5">強熱 (Δ)</span>
+              </button>
+
+              <button draggable="true" ondragstart="handleDragStart(event, &#39;水&#39;)" onclick="triggerReagent(&#39;水&#39;)" class="reagent-card group bg-gradient-to-b from-cyan-950/40 to-slate-900 border border-cyan-500/40 hover:border-cyan-400 hover:bg-cyan-900/40 p-1.5 rounded-xl flex flex-col items-center justify-center transition active:scale-95 shadow cursor-grab">
+                <span class="text-xl sm:text-2xl group-hover:scale-110 transition">💧</span>
+                <span class="font-bold text-[10px] sm:text-[11px] text-cyan-200 mt-0.5">水 (H₂O)</span>
+              </button>
+
+              <button draggable="true" ondragstart="handleDragStart(event, &#39;適量二氧化碳&#39;)" onclick="triggerReagent(&#39;適量二氧化碳&#39;)" class="reagent-card group bg-gradient-to-b from-emerald-950/40 to-slate-900 border border-emerald-500/40 hover:border-emerald-400 hover:bg-emerald-900/40 p-1.5 rounded-xl flex flex-col items-center justify-center transition active:scale-95 shadow cursor-grab">
+                <span class="text-xl sm:text-2xl group-hover:scale-110 transition">💨</span>
+                <span class="font-bold text-[10px] sm:text-[11px] text-emerald-200 mt-0.5 leading-tight text-center">適量 CO₂</span>
+              </button>
+
+              <button draggable="true" ondragstart="handleDragStart(event, &#39;過量二氧化碳與水&#39;)" onclick="triggerReagent(&#39;過量二氧化碳與水&#39;)" class="reagent-card group bg-gradient-to-b from-teal-950/40 to-slate-900 border border-teal-500/40 hover:border-teal-400 hover:bg-teal-900/40 p-1.5 rounded-xl flex flex-col items-center justify-center transition active:scale-95 shadow cursor-grab">
+                <span class="text-xl sm:text-2xl group-hover:scale-110 transition">🫧</span>
+                <span class="font-bold text-[10px] sm:text-[11px] text-teal-200 mt-0.5 leading-tight text-center">過量 CO₂<br>與水</span>
+              </button>
+
+              <button draggable="true" ondragstart="handleDragStart(event, &#39;稀氫氯酸&#39;)" onclick="triggerReagent(&#39;稀氫氯酸&#39;)" class="reagent-card group bg-gradient-to-b from-purple-950/40 to-slate-900 border border-purple-500/40 hover:border-purple-400 hover:bg-purple-900/40 p-1.5 rounded-xl flex flex-col items-center justify-center transition active:scale-95 shadow cursor-grab">
+                <span class="text-xl sm:text-2xl group-hover:scale-110 transition">🧪</span>
+                <span class="font-bold text-[10px] sm:text-[11px] text-purple-200 mt-0.5 leading-tight text-center">稀氫氯酸<br>(HCl)</span>
+              </button>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- 實驗現象日誌 (包含完整方程式) -->
+        <div id="reaction-log" class="mt-2.5 bg-slate-950/90 border border-slate-800 rounded-xl p-2.5 text-center text-xs text-slate-300 min-h-[54px] flex flex-col items-center justify-center shadow-inner font-medium"><div class="leading-tight">🔄 已清空實驗台，重新取用起始樣本「碳酸鈣」。</div></div>
+
+        <!-- 攻擊按鈕 -->
+        <button id="attack-action-btn" onclick="executeAttack()" class="mt-2.5 w-full py-2.5 sm:py-3 rounded-xl font-black text-xs sm:text-sm tracking-wide transition-all duration-200 shadow-lg flex items-center justify-center gap-1.5 bg-gradient-to-r from-red-600 to-rose-600 text-white border border-red-400/30 active:scale-98 hover:from-red-500 hover:to-rose-500">
+          <span>💥</span> 以當前產物【<span id="btn-compound-label">碳酸鈣</span>】發動攻擊！
+        </button>
+      </div>
+
+      <!-- 右側：石灰循環十字導航圖 -->
+      <div class="lg:col-span-5 bg-slate-900/95 rounded-2xl border border-slate-800 p-3.5 sm:p-4 flex flex-col justify-between shadow-2xl">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-2 mb-2">
+          <div class="flex items-center gap-1.5">
+            <span class="text-amber-400 text-base sm:text-lg">🗺️</span>
+            <span class="font-bold text-xs sm:text-sm text-slate-200">石灰循環路徑導航</span>
+          </div>
+          <span class="text-[10px] text-slate-400">發光處為當前位置</span>
+        </div>
+
+        <!-- 十字佈局結構 -->
+        <div class="w-full max-w-[280px] aspect-square mx-auto grid grid-cols-3 grid-rows-3 gap-2 p-2 bg-slate-950/90 rounded-2xl border border-slate-800 my-auto items-center justify-items-center text-center shadow-inner">
+          
+          <div></div>
+          <div id="node-Ca_HCO3_2" class="node-box w-full h-full flex flex-col items-center justify-center p-1 rounded-xl border border-slate-800 bg-slate-900/70 text-[11px] font-bold text-slate-400 transition-all duration-300">
+            <span>碳酸氫鈣</span>
+            <span class="text-[9px] opacity-70 font-mono">Ca(HCO₃)₂</span>
+          </div>
+          <div></div>
+
+          <div id="node-CaCl2" class="node-box w-full h-full flex flex-col items-center justify-center p-1 rounded-xl border border-slate-800 bg-slate-900/70 text-[11px] font-bold text-slate-400 transition-all duration-300">
+            <span>氯化鈣</span>
+            <span class="text-[9px] opacity-70 font-mono">CaCl₂</span>
+          </div>
+          
+          <div id="node-CaCO3" class="node-box w-full h-full flex flex-col items-center justify-center p-1 rounded-xl border-2 border-blue-400 bg-blue-900/60 text-blue-200 text-xs font-black shadow-lg glow-pulse transition-all duration-300">
+            <span>碳酸鈣</span>
+            <span class="text-[9px] opacity-80 font-mono">CaCO₃</span>
+          </div>
+
+          <div id="node-CaO" class="node-box w-full h-full flex flex-col items-center justify-center p-1 rounded-xl border border-slate-800 bg-slate-900/70 text-[11px] font-bold text-slate-400 transition-all duration-300">
+            <span>氧化鈣</span>
+            <span class="text-[9px] opacity-70 font-mono">CaO</span>
+          </div>
+
+          <div></div>
+          <div id="node-Ca_OH_2" class="node-box w-full h-full flex flex-col items-center justify-center p-1 rounded-xl border border-slate-800 bg-slate-900/70 text-[11px] font-bold text-slate-400 transition-all duration-300">
+            <span>氫氧化鈣</span>
+            <span class="text-[9px] opacity-70 font-mono">Ca(OH)₂</span>
+          </div>
+          <div></div>
+
+        </div>
+
+        <div class="mt-2 bg-slate-950/60 p-2 rounded-xl text-[11px] text-slate-400 text-center border border-slate-800 leading-tight">
+          💡 <span class="text-blue-300 font-semibold">循環規則</span>：碳酸鈣 ➔ 氧化鈣 ➔ 氫氧化鈣 ➔ 碳酸鈣
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 3. 圖鑑浮層彈窗 (Note Modal) -->
+  <div id="note-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-3 transition-opacity duration-200 opacity-0 hidden">
+    <div class="bg-slate-900 border border-slate-700 w-full max-w-lg rounded-2xl p-5 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeNoteModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg">✕</button>
+      
+      <div class="flex items-center gap-2 mb-3">
+        <span class="text-2xl">📋</span>
+        <h3 class="text-lg font-bold text-blue-300">石灰循環化學轉化筆記</h3>
+      </div>
+
+      <div class="space-y-2 text-xs sm:text-sm text-slate-300">
+        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+          <div class="font-bold text-orange-400 mb-1">① 強熱分解：</div>
+          <div class="font-mono text-amber-200 font-bold mb-1 tracking-wide">CaCO₃(s) ➝ CaO(s) + CO₂(g)↑</div>
+          <div>碳酸鈣 ＋ <span class="text-amber-300 font-bold">強熱</span> ➔ <strong>氧化鈣</strong>（白色固體）＋ 二氧化碳</div>
+        </div>
+
+        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+          <div class="font-bold text-cyan-400 mb-1">② 熟化放熱反應：</div>
+          <div class="font-mono text-cyan-200 font-bold mb-1 tracking-wide">CaO(s) + H₂O(l) ➝ Ca(OH)₂(aq)</div>
+          <div>氧化鈣 ＋ <span class="text-cyan-300 font-bold">水</span> ➔ <strong>氫氧化鈣</strong>（劇烈放熱，呈無色透明溶液）</div>
+        </div>
+
+        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+          <div class="font-bold text-emerald-400 mb-1">③ 沉澱生成（適量 CO₂）：</div>
+          <div class="font-mono text-emerald-200 font-bold mb-1 tracking-wide">Ca(OH)₂(aq) + CO₂(g) ➝ CaCO₃(s)↓ + H₂O(l)</div>
+          <div>氫氧化鈣 ＋ <span class="text-emerald-300 font-bold">適量二氧化碳</span> ➔ <strong>碳酸鈣</strong>（無色溶液變乳濁沉澱）</div>
+        </div>
+
+        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+          <div class="font-bold text-teal-400 mb-1">④ 沉澱溶解（過量 CO₂）：</div>
+          <div class="font-mono text-teal-200 font-bold mb-1 tracking-wide">CaCO₃(s) + CO₂(g) + H₂O(l) ➝ Ca(HCO₃)₂(aq)</div>
+          <div>碳酸鈣 ＋ <span class="text-teal-300 font-bold">過量二氧化碳與水</span> ➔ <strong>碳酸氫鈣</strong>（乳濁液變回無色透明）</div>
+        </div>
+
+        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+          <div class="font-bold text-purple-400 mb-1">⑤ 稀酸泡騰作用：</div>
+          <div class="font-mono text-purple-200 font-bold mb-1 tracking-wide">CaCO₃(s) + 2HCl(aq) ➝ CaCl₂(aq) + H₂O(l) + CO₂(g)↑</div>
+          <div>碳酸鈣 ＋ <span class="text-purple-300 font-bold">稀氫氯酸</span> ➔ <strong>氯化鈣</strong>（無色溶液）＋ 二氧化碳（泡騰冒泡）</div>
+        </div>
+      </div>
+
+      <button onclick="closeNoteModal()" class="mt-4 w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition shadow">
+        返回戰鬥
+      </button>
+    </div>
+  </div>
+
+  <!-- 4. 結算彈窗 (Victory / Game Over Modal) -->
+  <div id="game-over-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-3 transition-opacity duration-200 opacity-0 hidden">
+    <div class="bg-slate-900 border-2 border-slate-700 w-full max-w-md rounded-3xl p-6 text-center shadow-2xl relative">
+      <div id="end-emoji" class="text-6xl mb-2">🏆</div>
+      <h3 id="end-title" class="text-2xl font-black text-amber-300 mb-2">實驗室守護成功！</h3>
+      <p id="end-description" class="text-xs sm:text-sm text-slate-300 mb-4 leading-relaxed">恭喜你！你完成了石灰循環的關鍵反應；每一步方程式均已配平並標示必要條件。</p>
+
+      <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 mb-4 text-xs text-left space-y-1.5">
+        <div class="flex justify-between">
+          <span class="text-slate-400">成功完成化學反應：</span>
+          <span id="stat-reactions" class="font-bold text-blue-400">7 次</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400">精準弱點淨化：</span>
+          <span id="stat-hits" class="font-bold text-emerald-400">7 次</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400">石灰循環掌握度：</span>
+          <span class="font-bold text-amber-400">100% ⭐⭐⭐⭐⭐</span>
+        </div>
+      </div>
+
+      <button onclick="resetGame()" class="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-black rounded-xl transition shadow-lg text-sm sm:text-base active:scale-95">
+        🔄 再次挑戰，鞏固化學記憶
+      </button>
+    </div>
+  </div>
+
+  <!-- 5. 遊戲邏輯與化學轉化引擎 (嚴謹化學外觀與寫實動效) -->
+  <script>
+    // 化學物真實資料庫（真實外觀與狀態，無人工染色）
+    const COMPOUNDS = {
+      'CaCO3': { 
+        name: '碳酸鈣', 
+        formula: 'CaCO₃', 
+        nodeId: 'node-CaCO3', 
+        stateDesc: '白色固態・不溶',
+        liquidColor: 'rgba(255, 255, 255, 0.05)',
+        sedimentOpacity: 1
+      },
+      'CaO': { 
+        name: '氧化鈣', 
+        formula: 'CaO', 
+        nodeId: 'node-CaO', 
+        stateDesc: '白色固體粉末',
+        liquidColor: 'rgba(255, 255, 255, 0.02)',
+        sedimentOpacity: 0.95
+      },
+      'Ca_OH_2': { 
+        name: '氫氧化鈣', 
+        formula: 'Ca(OH)₂', 
+        nodeId: 'node-Ca_OH_2', 
+        stateDesc: '無色澄清溶液 (水溶液)',
+        liquidColor: 'rgba(255, 255, 255, 0.12)', 
+        sedimentOpacity: 0
+      },
+      'CaCl2': { 
+        name: '氯化鈣', 
+        formula: 'CaCl₂', 
+        nodeId: 'node-CaCl2', 
+        stateDesc: '無色澄清溶液',
+        liquidColor: 'rgba(255, 255, 255, 0.12)',
+        sedimentOpacity: 0
+      },
+      'Ca_HCO3_2': { 
+        name: '碳酸氫鈣', 
+        formula: 'Ca(HCO₃)₂', 
+        nodeId: 'node-Ca_HCO3_2', 
+        stateDesc: '無色澄清溶液 (沉澱溶解)',
+        liquidColor: 'rgba(255, 255, 255, 0.12)',
+        sedimentOpacity: 0
+      }
+    };
+
+    const MONSTER_SVGS = {
+      slime: `
+        <svg viewBox="0 0 140 140" class="w-full h-full filter drop-shadow-[0_0_20px_rgba(56,189,248,0.7)]">
+          <defs>
+            <radialGradient id="frostBody" cx="45%" cy="35%" r="65%"><stop offset="0%" stop-color="#e0f2fe"/><stop offset="45%" stop-color="#38bdf8"/><stop offset="85%" stop-color="#0284c7"/><stop offset="100%" stop-color="#082f49"/></radialGradient>
+            <linearGradient id="iceSpikeGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffffff"/><stop offset="60%" stop-color="#7dd3fc"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+          </defs>
+          <polygon points="70,8 58,35 82,35" fill="url(#iceSpikeGrad)" stroke="#e0f2fe" stroke-width="1.5" />
+          <polygon points="36,20 28,48 50,42" fill="url(#iceSpikeGrad)" stroke="#e0f2fe" stroke-width="1.5" />
+          <polygon points="104,20 90,42 112,48" fill="url(#iceSpikeGrad)" stroke="#e0f2fe" stroke-width="1.5" />
+          <polygon points="18,48 12,70 32,62" fill="url(#iceSpikeGrad)" stroke="#e0f2fe" stroke-width="1.5" />
+          <polygon points="122,48 108,62 128,70" fill="url(#iceSpikeGrad)" stroke="#e0f2fe" stroke-width="1.5" />
+          <path d="M24,92 Q12,50 70,40 Q128,50 116,92 Q110,126 70,122 Q30,126 24,92 Z" fill="url(#frostBody)" />
+          <path d="M35,62 Q70,48 105,62" stroke="#ffffff" stroke-width="2.5" fill="none" opacity="0.6" stroke-linecap="round" />
+          <ellipse cx="70" cy="52" rx="20" ry="6" fill="#ffffff" opacity="0.3" />
+          <ellipse cx="50" cy="76" rx="10" ry="14" fill="#ffffff" /><circle cx="52" cy="76" r="6.5" fill="#0284c7" /><circle cx="55" cy="73" r="2.8" fill="#ffffff" />
+          <ellipse cx="90" cy="76" rx="10" ry="14" fill="#ffffff" /><circle cx="88" cy="76" r="6.5" fill="#0284c7" /><circle cx="91" cy="73" r="2.8" fill="#ffffff" />
+          <path d="M58,98 Q70,108 82,98" stroke="#bae6fd" stroke-width="3.5" fill="none" stroke-linecap="round" />
+        </svg>
+      `,
+      troll: `
+        <svg viewBox="0 0 140 140" class="w-full h-full filter drop-shadow-[0_0_20px_rgba(74,222,128,0.7)]">
+          <defs>
+            <radialGradient id="acidBody" cx="50%" cy="32%" r="68%"><stop offset="0%" stop-color="#bbf7d0"/><stop offset="40%" stop-color="#22c55e"/><stop offset="80%" stop-color="#15803d"/><stop offset="100%" stop-color="#052e16"/></radialGradient>
+            <linearGradient id="poisonHorn" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f472b6"/><stop offset="60%" stop-color="#a855f7"/><stop offset="100%" stop-color="#581c87"/></linearGradient>
+          </defs>
+          <path d="M36,45 Q20,12 40,6 Q48,22 48,46 Z" fill="url(#poisonHorn)" stroke="#fbcfe8" stroke-width="1.5" />
+          <path d="M104,45 Q120,12 100,6 Q92,22 92,46 Z" fill="url(#poisonHorn)" stroke="#fbcfe8" stroke-width="1.5" />
+          <path d="M28,52 Q16,112 70,124 Q124,112 112,52 Q100,28 70,28 Q40,28 28,52 Z" fill="url(#acidBody)" />
+          <polygon points="40,58 64,68 42,74" fill="#facc15" stroke="#ca8a04" stroke-width="1" />
+          <polygon points="100,58 76,68 98,74" fill="#facc15" stroke="#ca8a04" stroke-width="1" />
+          <circle cx="52" cy="67" r="3.5" fill="#7f1d1d" /><circle cx="88" cy="67" r="3.5" fill="#7f1d1d" />
+          <path d="M46,92 Q70,112 94,92 Q82,85 70,87 Q58,85 46,92 Z" fill="#0f172a" />
+          <polygon points="52,90 58,102 64,90" fill="#f8fafc" /><polygon points="76,90 82,102 88,90" fill="#f8fafc" />
+          <circle cx="34" cy="98" r="5" fill="#86efac" opacity="0.85" /><circle cx="106" cy="92" r="6" fill="#86efac" opacity="0.85" /><circle cx="42" cy="40" r="3.5" fill="#86efac" opacity="0.7" />
+        </svg>
+      `,
+      boss: `
+        <svg viewBox="0 0 140 140" class="w-full h-full filter drop-shadow-[0_0_25px_rgba(245,158,11,0.8)]">
+          <defs>
+            <linearGradient id="strataRock" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fef08a"/><stop offset="35%" stop-color="#d97706"/><stop offset="75%" stop-color="#78350f"/><stop offset="100%" stop-color="#291003"/></linearGradient>
+            <radialGradient id="bossCoreEye" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ffffff"/><stop offset="30%" stop-color="#fef08a"/><stop offset="70%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#9a3412"/></radialGradient>
+          </defs>
+          <polygon points="70,4 58,36 82,36" fill="url(#strataRock)" stroke="#fde047" stroke-width="1.5" />
+          <polygon points="40,12 34,42 54,38" fill="url(#strataRock)" stroke="#fde047" stroke-width="1.5" />
+          <polygon points="100,12 86,38 106,42" fill="url(#strataRock)" stroke="#fde047" stroke-width="1.5" />
+          <polygon points="16,32 24,56 42,48" fill="url(#strataRock)" stroke="#fde047" stroke-width="1.5" />
+          <polygon points="124,32 98,48 116,56" fill="url(#strataRock)" stroke="#fde047" stroke-width="1.5" />
+          <polygon points="70,38 114,60 102,120 70,132 38,120 26,60" fill="url(#strataRock)" stroke="#fef08a" stroke-width="2.5" />
+          <circle cx="70" cy="85" r="19" fill="url(#bossCoreEye)" stroke="#fde047" stroke-width="2" />
+          <circle cx="70" cy="85" r="8" fill="#ffffff" />
+          <line x1="46" y1="72" x2="58" y2="82" stroke="#fef08a" stroke-width="2.5" stroke-linecap="round" />
+          <line x1="94" y1="72" x2="82" y2="82" stroke="#fef08a" stroke-width="2.5" stroke-linecap="round" />
+          <line x1="70" y1="108" x2="70" y2="124" stroke="#fef08a" stroke-width="2.5" stroke-linecap="round" />
+        </svg>
+      `
+    };
+
+    // 完整化學反應規則（包含反應式與狀態符號）
+    const VALID_REACTIONS = [
+      {
+        from: '碳酸鈣', reagent: '強熱', to: '氧化鈣',
+        equation: 'CaCO₃(s) ➝ CaO(s) + CO₂(g)↑',
+        msg: '【強熱分解】碳酸鈣受強熱分解，生成氧化鈣並釋出二氧化碳！',
+        type: 'heat'
+      },
+      {
+        from: '氧化鈣', reagent: '水', to: '氫氧化鈣',
+        equation: 'CaO(s) + H₂O(l) ➝ Ca(OH)₂(aq)',
+        msg: '【熟化放熱反應】生石灰與水劇烈反應並釋放大量熱能，生成氫氧化鈣溶液！',
+        type: 'slake'
+      },
+      {
+        from: '氫氧化鈣', reagent: '適量二氧化碳', to: '碳酸鈣',
+        equation: 'Ca(OH)₂(aq) + CO₂(g) ➝ CaCO₃(s)↓ + H₂O(l)',
+        msg: '【沉澱生成】通入適量二氧化碳，無色溶液生成白色沉澱並變乳濁色！',
+        type: 'precipitate'
+      },
+      {
+        from: '碳酸鈣', reagent: '稀氫氯酸', to: '氯化鈣',
+        equation: 'CaCO₃(s) + 2HCl(aq) ➝ CaCl₂(aq) + CO₂(g)↑ + H₂O(l)',
+        msg: '【稀酸泡騰作用】碳酸鈣與稀酸反應冒出大量二氧化碳氣泡，生成無色溶液！',
+        type: 'effervescence'
+      },
+      {
+        from: '碳酸鈣', reagent: '過量二氧化碳與水', to: '碳酸氫鈣',
+        equation: 'CaCO₃(s) + CO₂(g) + H₂O(l) ➝ Ca(HCO₃)₂(aq)',
+        msg: '【沉澱溶解反應】加入過量 CO₂ 與水，白色乳濁沉澱完全溶解，溶液變回無色透明！',
+        type: 'dissolve'
+      }
+    ];
+
+    // 特殊無效反應的診斷教學引導
+    const MISCONCEPTION_GUIDES = {
+      '碳酸鈣+水': '⚠️ 錯誤：碳酸鈣（大理石/方解石）不溶於純水，不會發生反應！',
+      '氧化鈣+強熱': '⚠️ 錯誤：氧化鈣在高溫下非常穩定。製備氫氧化鈣需要加入「水」進行熟化。',
+      '氧化鈣+適量二氧化碳': '⚠️ 錯誤：氧化鈣需先加水轉化為氫氧化鈣溶液，才能有效進行二氧化碳試驗！',
+      '氫氧化鈣+水': '⚠️ 錯誤：氫氧化鈣已處於水溶液中，無法透過加水進一步轉化。',
+      '氫氧化鈣+強熱': '⚠️ 錯誤：請依據石灰循環路徑，通入二氧化碳以生成碳酸鈣沉澱！',
+      '氯化鈣': '💡 提示：氯化鈣為此分支終點產物，請點擊「重取碳酸鈣」回到主循環。',
+      '碳酸氫鈣': '💡 提示：碳酸氫鈣為溶蝕產物，請點擊「重取碳酸鈣」回到主循環。'
+    };
+
+    // 三大漸進式關卡
+    const STAGES = [
+      {
+        id: 1, name: '寒霜晶怪', svgKey: 'slime', glowColor: 'bg-cyan-500/10',
+        maxHp: 100, weaknesses: ['氧化鈣', '氫氧化鈣'],
+        hint: '先以「氧化鈣」削弱防禦，再製備「氫氧化鈣」中和威脅！'
+      },
+      {
+        id: 2, name: '酸蝕霧魔', svgKey: 'troll', glowColor: 'bg-emerald-500/10',
+        maxHp: 100, weaknesses: ['碳酸鈣', '氯化鈣'],
+        hint: '怪獸需被「碳酸鈣」沉澱封印，再用稀酸引發泡騰爆破！'
+      },
+      {
+        id: 3, name: '溶洞結晶巨像', svgKey: 'boss', glowColor: 'bg-amber-500/15',
+        maxHp: 150, weaknesses: ['碳酸氫鈣', '氧化鈣', '氯化鈣'],
+        hint: '終極領主！需依序溶解其石甲、以高溫及酸性爆破將其擊碎！'
+      }
+    ];
+
+    // 狀態變數
+    let currentStageIdx = 0;
+    let currentWeaknessIdx = 0;
+    let monsterHp = 100;
+    let playerHp = 100;
+    let currentCompound = '碳酸鈣';
+    let isAttacking = false;
+    let isTransitioning = false; // 用於防止動畫中過度操作
+    
+    let stats = { reactions: 0, hits: 0 };
+
+    // 音效系統 (Web Audio API)
+    let soundEnabled = true;
+    let audioCtx = null;
+
+    function initAudio() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (AudioContext) audioCtx = new AudioContext();
+      }
+    }
+
+    function playTone(freq, type = 'sine', duration = 0.15, vol = 0.2) {
+      if (!soundEnabled) return;
+      try {
+        initAudio();
+        if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch(e) {}
+    }
+
+    function playSoundEffect(name) {
+      if (!soundEnabled) return;
+      if (name === 'react') {
+        playTone(523.25, 'triangle', 0.1, 0.2);
+        setTimeout(() => playTone(659.25, 'triangle', 0.15, 0.25), 80);
+      } else if (name === 'fire') {
+        playTone(320, 'sawtooth', 0.25, 0.3);
+      } else if (name === 'hit') {
+        playTone(880, 'square', 0.1, 0.2);
+        setTimeout(() => playTone(1046.5, 'triangle', 0.25, 0.3), 90);
+      } else if (name === 'error') {
+        playTone(180, 'sawtooth', 0.25, 0.25);
+      } else if (name === 'win') {
+        [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => {
+          setTimeout(() => playTone(f, 'triangle', 0.25, 0.25), i * 110);
+        });
+      }
+    }
+
+    function toggleAudio() {
+      soundEnabled = !soundEnabled;
+      document.getElementById('sound-icon').innerText = soundEnabled ? '🔊' : '🔇';
+    }
+
+    function initGame() {
+      currentStageIdx = 0;
+      playerHp = 100;
+      stats = { reactions: 0, hits: 0 };
+      loadStage(currentStageIdx);
+    }
+
+    function loadStage(idx) {
+      isTransitioning = false;
+      const stage = STAGES[idx];
+      monsterHp = stage.maxHp;
+      currentWeaknessIdx = 0;
+      currentCompound = '碳酸鈣';
+      
+      document.getElementById('monster-name').innerText = stage.name;
+      document.getElementById('stage-badge').innerText = `關卡 ${stage.id} / ${STAGES.length}`;
+      document.getElementById('monster-svg-slot').innerHTML = MONSTER_SVGS[stage.svgKey];
+      document.getElementById('monster-glow-bg').className = `absolute -right-10 -top-10 w-60 h-60 rounded-full blur-3xl pointer-events-none transition-colors duration-700 ${stage.glowColor}`;
+
+      updateUI();
+      logMessage(`⚔️ 進入 ${stage.name}！<br>${stage.hint}`);
+    }
+
+    function triggerReagent(reagentName) {
+      if (isAttacking || isTransitioning || playerHp <= 0 || monsterHp <= 0) return;
+      initAudio();
+      
+      const matchedReaction = VALID_REACTIONS.find(r => r.from === currentCompound && r.reagent === reagentName);
+
+      if (matchedReaction) {
+        currentCompound = matchedReaction.to;
+        stats.reactions++;
+        playSoundEffect('react');
+        
+        createVisualEffect(matchedReaction.type);
+        logMessage(matchedReaction.msg, 'success', matchedReaction.equation);
+        updateUI();
+      } else {
+        playSoundEffect('error');
+        
+        const key = `${currentCompound}+${reagentName}`;
+        const guideMsg = MISCONCEPTION_GUIDES[key] || 
+                         MISCONCEPTION_GUIDES[currentCompound] || 
+                         `⚠️ 錯誤：「${currentCompound}」與「${reagentName}」無法直接反應！請查看圖鑑。`;
+        
+        logMessage(guideMsg, 'error');
+      }
+    }
+
+    function resetSample() {
+      if (isAttacking || isTransitioning || playerHp <= 0 || monsterHp <= 0) return;
+      initAudio();
+      currentCompound = '碳酸鈣';
+      playSoundEffect('react');
+      logMessage('🔄 已清空實驗台，重新取用起始樣本「碳酸鈣」。');
+      updateUI();
+    }
+
+    function spawnAttackProjectile(compoundName, callback) {
+      const originEl = document.getElementById('current-compound-card');
+      const targetEl = document.getElementById('monster-container');
+      const layer = document.getElementById('projectile-layer');
+
+      const originRect = originEl.getBoundingClientRect();
+      const targetRect = targetEl.getBoundingClientRect();
+
+      const proj = document.createElement('div');
+      proj.className = 'projectile';
+      proj.style.left = `${originRect.left + originRect.width / 2 - 28}px`;
+      proj.style.top = `${originRect.top + originRect.height / 2 - 28}px`;
+      proj.style.width = '56px';
+      proj.style.height = '56px';
+
+      if (compoundName === '氧化鈣') {
+        proj.innerHTML = `<div class="w-14 h-14 rounded-full bg-gradient-to-r from-amber-300 via-orange-500 to-red-600 shadow-[0_0_30px_#f97316] flex items-center justify-center text-3xl animate-pulse">🔥</div>`;
+      } else if (compoundName === '氫氧化鈣') {
+        proj.innerHTML = `<div class="w-14 h-14 rounded-full bg-gradient-to-r from-slate-100 via-sky-300 to-blue-400 shadow-[0_0_30px_#bae6fd] flex items-center justify-center text-3xl">💨</div>`;
+      } else if (compoundName === '碳酸鈣') {
+        proj.innerHTML = `<div class="w-14 h-14 rounded-2xl bg-slate-100 border-2 border-white shadow-[0_0_30px_#ffffff] transform rotate-45 flex items-center justify-center text-3xl">🪨</div>`;
+      } else if (compoundName === '氯化鈣') {
+        proj.innerHTML = `<div class="w-14 h-14 rounded-full bg-gradient-to-r from-emerald-300 via-teal-400 to-cyan-500 shadow-[0_0_30px_#6ee7b7] flex items-center justify-center text-3xl animate-bounce">🫧</div>`;
+      } else if (compoundName === '碳酸氫鈣') {
+        proj.innerHTML = `<div class="w-14 h-14 rounded-full bg-gradient-to-r from-white via-cyan-200 to-sky-400 shadow-[0_0_30px_#e0f2fe] flex items-center justify-center text-3xl animate-spin">✨</div>`;
+      }
+
+      layer.appendChild(proj);
+      playSoundEffect('fire');
+
+      requestAnimationFrame(() => {
+        proj.style.left = `${targetRect.left + targetRect.width / 2 - 28}px`;
+        proj.style.top = `${targetRect.top + targetRect.height / 2 - 28}px`;
+        proj.style.transform = 'scale(1.35)';
+      });
+
+      setTimeout(() => {
+        proj.remove();
+        if (callback) callback();
+      }, 520);
+    }
+
+    function executeAttack() {
+      if (isAttacking || isTransitioning || playerHp <= 0 || monsterHp <= 0) return;
+      initAudio();
+      
+      const stage = STAGES[currentStageIdx];
+      const targetWeakness = stage.weaknesses[currentWeaknessIdx];
+
+      isAttacking = true;
+      updateUI(); // Disable button
+
+      spawnAttackProjectile(currentCompound, () => {
+        isAttacking = false;
+        const avatarContainer = document.getElementById('monster-container');
+        const dmgPopup = document.getElementById('dmg-popup');
+
+        if (currentCompound === targetWeakness) {
+          playSoundEffect('hit');
+          stats.hits++;
+
+          const dmg = Math.ceil(stage.maxHp / stage.weaknesses.length);
+          monsterHp = Math.max(0, monsterHp - dmg);
+
+          avatarContainer.classList.add('shake', 'monster-hit');
+          dmgPopup.innerText = `-${dmg} 淨化打擊！`;
+          dmgPopup.style.opacity = '1';
+          dmgPopup.style.transform = 'translateY(-24px)';
+
+          setTimeout(() => {
+            avatarContainer.classList.remove('shake', 'monster-hit');
+            dmgPopup.style.opacity = '0';
+            dmgPopup.style.transform = 'translateY(0)';
+          }, 600);
+
+          logMessage(`💥 成功命中！使用【${currentCompound}】造成 ${dmg} 點淨化傷害！`, 'hit');
+
+          currentWeaknessIdx++;
+
+          if (monsterHp <= 0 || currentWeaknessIdx >= stage.weaknesses.length) {
+            monsterHp = 0;
+            isTransitioning = true;
+            updateUI();
+            
+            setTimeout(() => {
+              if (currentStageIdx < STAGES.length - 1) {
+                currentStageIdx++;
+                playSoundEffect('win');
+                loadStage(currentStageIdx);
+              } else {
+                showGameOver(true);
+              }
+            }, 800);
+            return;
+          }
+
+        } else {
+          playSoundEffect('error');
+          const counterDmg = 15;
+          playerHp = Math.max(0, playerHp - counterDmg);
+
+          document.body.classList.add('shake');
+          setTimeout(() => document.body.classList.remove('shake'), 400);
+
+          logMessage(`❌ 屬性不符！怪獸的目標是【${targetWeakness}】，對【${currentCompound}】免疫並發動反擊！(-${counterDmg} HP)`, 'error');
+
+          if (playerHp <= 0) {
+            isTransitioning = true;
+            updateUI();
+            setTimeout(() => showGameOver(false), 600);
+            return;
+          }
+        }
+        updateUI();
+      });
+    }
+
+    function updateUI() {
+      const stage = STAGES[currentStageIdx];
+
+      const monsterHpPct = (monsterHp / stage.maxHp) * 100;
+      document.getElementById('monster-hp-bar').style.width = `${monsterHpPct}%`;
+      document.getElementById('monster-hp-label').innerText = `${monsterHp} / ${stage.maxHp}`;
+
+      document.getElementById('player-hp-bar').style.width = `${playerHp}%`;
+      document.getElementById('player-hp-label').innerText = `${playerHp} / 100`;
+
+      const target = stage.weaknesses[currentWeaknessIdx] || '已擊破';
+      document.getElementById('target-chemical-name').innerText = target;
+      document.getElementById('goal-hint').innerText = target === '已擊破' ? '等待下一步' : `由目前狀態轉化出：`;
+
+      const compKey = Object.keys(COMPOUNDS).find(k => COMPOUNDS[k].name === currentCompound);
+      const compData = COMPOUNDS[compKey] || { 
+        name: currentCompound, formula: '', nodeId: '', stateDesc: '',
+        liquidColor: 'rgba(255,255,255,0.1)', sedimentOpacity: 0
+      };
+      
+      document.getElementById('current-compound-name').innerText = compData.name;
+      document.getElementById('current-compound-formula').innerText = compData.formula;
+      document.getElementById('current-compound-state').innerText = compData.stateDesc;
+      document.getElementById('btn-compound-label').innerText = compData.name;
+      
+      document.getElementById('flask-liquid').setAttribute('fill', compData.liquidColor);
+      document.getElementById('flask-sediment').setAttribute('opacity', compData.sedimentOpacity);
+
+      const attackBtn = document.getElementById('attack-action-btn');
+      const isDisabled = isTransitioning || isAttacking || playerHp <= 0 || monsterHp <= 0;
+      
+      if (currentCompound === target) {
+        attackBtn.className = `mt-2.5 w-full py-2.5 sm:py-3 rounded-xl font-black text-xs sm:text-sm tracking-wide transition-all duration-200 shadow-lg flex items-center justify-center gap-1.5 bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 border border-amber-300 weakness-glow ${isDisabled ? 'opacity-50 cursor-not-allowed' : 'active:scale-98 hover:brightness-110'}`;
+      } else {
+        attackBtn.className = `mt-2.5 w-full py-2.5 sm:py-3 rounded-xl font-black text-xs sm:text-sm tracking-wide transition-all duration-200 shadow-lg flex items-center justify-center gap-1.5 bg-gradient-to-r from-red-600 to-rose-600 text-white border border-red-400/30 ${isDisabled ? 'opacity-50 cursor-not-allowed' : 'active:scale-98 hover:from-red-500 hover:to-rose-500'}`;
+      }
+      attackBtn.disabled = isDisabled;
+
+      document.querySelectorAll('.node-box').forEach(el => {
+        el.className = 'node-box w-full h-full flex flex-col items-center justify-center p-1 rounded-xl border border-slate-800 bg-slate-900/70 text-[11px] font-bold text-slate-400 transition-all duration-300';
+      });
+
+      if (compData.nodeId) {
+        const activeNode = document.getElementById(compData.nodeId);
+        if (activeNode) {
+          activeNode.className = 'node-box w-full h-full flex flex-col items-center justify-center p-1 rounded-xl border-2 border-blue-400 bg-blue-900/60 text-blue-200 text-xs font-black shadow-lg glow-pulse transition-all duration-300';
+        }
+      }
+    }
+
+    function logMessage(text, type = 'normal', equation = null) {
+      const logBox = document.getElementById('reaction-log');
+      
+      let content = equation 
+        ? `<div class="font-mono text-amber-200 font-bold text-[13px] tracking-wide mb-1 leading-none drop-shadow-sm">${equation}</div><div class="leading-tight">${text}</div>` 
+        : `<div class="leading-tight">${text}</div>`;
+
+      if (type === 'success') {
+        logBox.className = 'mt-2.5 bg-emerald-950/90 border border-emerald-500/60 rounded-xl p-2.5 text-center text-xs text-emerald-100 min-h-[54px] flex flex-col items-center justify-center shadow-inner font-medium';
+      } else if (type === 'error') {
+        logBox.className = 'mt-2.5 bg-rose-950/90 border border-rose-500/60 rounded-xl p-2.5 text-center text-xs text-rose-200 min-h-[54px] flex flex-col items-center justify-center shadow-inner font-medium';
+      } else if (type === 'hit') {
+        logBox.className = 'mt-2.5 bg-amber-950/90 border border-amber-500/60 rounded-xl p-2.5 text-center text-xs text-amber-100 min-h-[54px] flex flex-col items-center justify-center shadow-inner font-medium';
+      } else {
+        logBox.className = 'mt-2.5 bg-slate-950/90 border border-slate-800 rounded-xl p-2.5 text-center text-xs text-slate-300 min-h-[54px] flex flex-col items-center justify-center shadow-inner font-medium';
+      }
+      
+      logBox.innerHTML = content;
+    }
+
+    function createVisualEffect(type) {
+      const container = document.getElementById('particle-container');
+      container.innerHTML = '';
+
+      if (type === 'effervescence' || type === 'dissolve') {
+        for (let i = 0; i < 22; i++) {
+          const b = document.createElement('div');
+          b.className = 'effervescence-bubble';
+          const size = Math.random() * 9 + 4;
+          b.style.width = `${size}px`;
+          b.style.height = `${size}px`;
+          b.style.left = `${Math.random() * 70 + 15}%`;
+          b.style.bottom = '18px';
+          b.style.animationDelay = `${Math.random() * 0.4}s`;
+          container.appendChild(b);
+        }
+      } else if (type === 'slake' || type === 'heat') {
+        for (let i = 0; i < 5; i++) {
+          const s = document.createElement('div');
+          s.className = 'steam-wave';
+          s.style.left = `${30 + i * 10}%`;
+          s.style.bottom = '25px';
+          s.style.animationDelay = `${i * 0.15}s`;
+          container.appendChild(s);
+        }
+        const card = document.getElementById('current-compound-card');
+        card.classList.add('shake');
+        setTimeout(() => card.classList.remove('shake'), 400);
+      }
+    }
+
+    function handleDragStart(e, reagentName) {
+      if (isTransitioning || isAttacking || playerHp <= 0) return;
+      e.dataTransfer.setData('text/plain', reagentName);
+      e.dataTransfer.effectAllowed = 'copy';
+    }
+
+    function handleDragOver(e) { e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; }
+    function handleDragEnter(e) { if(!isTransitioning && !isAttacking) { e.preventDefault(); document.getElementById('drop-zone').classList.add('drag-target-hover'); } }
+    function handleDragLeave(e) { document.getElementById('drop-zone').classList.remove('drag-target-hover'); }
+
+    function handleDrop(e) {
+      e.preventDefault();
+      document.getElementById('drop-zone').classList.remove('drag-target-hover');
+      const reagentName = e.dataTransfer.getData('text/plain');
+      if (reagentName) triggerReagent(reagentName);
+    }
+
+    function openNoteModal() {
+      const modal = document.getElementById('note-modal');
+      modal.classList.remove('hidden');
+      setTimeout(() => modal.classList.remove('opacity-0'), 10);
+    }
+
+    function closeNoteModal() {
+      const modal = document.getElementById('note-modal');
+      modal.classList.add('opacity-0');
+      setTimeout(() => modal.classList.add('hidden'), 200);
+    }
+
+    function showGameOver(isWin) {
+      const modal = document.getElementById('game-over-modal');
+      const title = document.getElementById('end-title');
+      const desc = document.getElementById('end-description');
+      const emoji = document.getElementById('end-emoji');
+
+      document.getElementById('stat-reactions').innerText = `${stats.reactions} 次`;
+      document.getElementById('stat-hits').innerText = `${stats.hits} 次`;
+
+      if (isWin) {
+        playSoundEffect('win');
+        emoji.innerText = '🏆';
+        title.innerText = '實驗室守護成功！';
+        title.className = 'text-2xl font-black text-amber-300 mb-2';
+        desc.innerText = '恭喜你！你完成了石灰循環的關鍵反應；每一步方程式均已配平並標示必要條件。';
+      } else {
+        playSoundEffect('error');
+        emoji.innerText = '🧯';
+        title.innerText = '守護者需要重新整備';
+        title.className = 'text-2xl font-black text-rose-400 mb-2';
+        desc.innerText = '請先重溫反應筆記，尤其注意強熱、適量／過量二氧化碳及稀氫氯酸！';
+      }
+
+      modal.classList.remove('hidden');
+      setTimeout(() => modal.classList.remove('opacity-0'), 10);
+    }
+
+    function resetGame() {
+      const modal = document.getElementById('game-over-modal');
+      modal.classList.add('opacity-0');
+      setTimeout(() => modal.classList.add('hidden'), 200);
+      initGame();
+    }
+
+    window.onload = initGame;
+  </script>
+
+
+</body></html>
