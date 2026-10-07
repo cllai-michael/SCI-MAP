@@ -20,12 +20,12 @@
     },
     {
       "id": "states-of-matter",
-      "name": "物質三態",
+      "name": "測試《物質三態》",
       "description": "判斷日常現象屬於固體、液體還是氣體，看看你有多熟悉物質的狀態。",
       "subject": "is",
       "order": 1,
       "file": "games/states-of-matter/index.html",
-      "updatedAt": "2026-10-06T00:00:00.000Z"
+      "updatedAt": "2026-10-07T12:13:37.109Z"
     },
     {
       "id": "game-muy2e31t-9puv",
