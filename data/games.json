@@ -2,12 +2,12 @@
   "games": [
     {
       "id": "animal-cell",
-      "name": "動物細胞",
+      "name": "測試《動物細胞》",
       "description": "認識動物細胞的基本部分，看看你能不能對上名稱和功能。",
       "subject": "bio",
       "order": 1,
       "file": "games/animal-cell/index.html",
-      "updatedAt": "2026-10-06T00:00:00.000Z"
+      "updatedAt": "2026-10-07T12:10:23.675Z"
     },
     {
       "id": "element-symbols",
