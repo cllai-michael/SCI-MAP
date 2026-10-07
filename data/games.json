@@ -11,12 +11,12 @@
     },
     {
       "id": "element-symbols",
-      "name": "元素符號",
+      "name": "測試 《元素符號》",
       "description": "看元素的中文名稱，選出正確的元素符號。",
       "subject": "chem",
       "order": 1,
       "file": "games/element-symbols/index.html",
-      "updatedAt": "2026-10-06T00:00:00.000Z"
+      "updatedAt": "2026-10-07T12:09:34.741Z"
     },
     {
       "id": "states-of-matter",
