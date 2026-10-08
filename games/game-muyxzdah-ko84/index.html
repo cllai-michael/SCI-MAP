@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>電子共享屋</title>
+<style>
+  :root {
+    --ink: #2b241c;
+    --paper: #fffaf2;
+    --wood: #c4844a;
+    --wood-dark: #8d5a2b;
+    --gold: #f0b429;
+    --gold-deep: #a86b00;
+    --ok: #1f7a45;
+    --warn: #9a4d12;
+    --cross: #1a4a32;
+    --dot: #1a3d78;
+    --shell: #2f9e62;
+    --shell-deep: #1c6b40;
+    --arm: 3px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    font-family: "PingFang TC", "Heiti TC", "Microsoft JhengHei", sans-serif;
+    color: var(--ink);
+    background:
+      radial-gradient(circle at 18% 0%, #fff 0, transparent 42%),
+      linear-gradient(#d7ecff, #f4efe4 46%);
+    min-height: 100%;
+  }
+  button, .electron { touch-action: none; font-family: inherit; }
+  .app { max-width: 980px; margin: 0 auto; padding: 12px 12px 28px; }
+  header { text-align: center; }
+  h1 { font-size: clamp(28px, 5vw, 40px); margin: 4px 0 2px; letter-spacing: 0.04em; }
+  .goal { margin: 0; font-size: clamp(16px, 2.4vw, 20px); }
+  .goal b { color: var(--wood-dark); }
+  .step { margin: 4px 0 0; color: #5c5146; font-size: 15px; }
+  .legend { margin: 6px 0 0; font-size: 14px; color: #5c5146; }
+  .legend i { font-style: normal; font-weight: 800; }
+  .legend .x { color: var(--cross); }
+  .legend .o { color: var(--dot); }
+  .meters {
+    display: grid;
+    grid-template-columns: 1.15fr 0.9fr 1.15fr;
+    gap: 8px;
+    margin: 12px 0;
+    align-items: stretch;
+  }
+  .meter, .total {
+    background: var(--paper);
+    border: 2px solid #eadfcd;
+    border-radius: 16px;
+    padding: 8px 8px;
+    text-align: center;
+    min-width: 0;
+  }
+  .meter .num, .total .num { font-size: clamp(26px, 5vw, 36px); font-weight: 800; line-height: 1; }
+  .meter small, .total small { display: block; color: #6d6256; font-size: 13px; line-height: 1.35; }
+  .parts { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.1em 0.35em; }
+  .parts span + span::before { content: "＋ "; }
+  .meter.ready .num { color: var(--ok); }
+  .formula { margin: 0 0 8px; text-align: center; color: #5c5146; }
+  .formula b { color: var(--ink); }
+  .house {
+    background: linear-gradient(#fff7ea, #f3e2c4);
+    border: 4px solid var(--wood-dark);
+    border-radius: 8px 8px 22px 22px;
+    padding: 12px 8px 16px;
+    position: relative;
+    box-shadow: 0 10px 0 #e7d3b0;
+  }
+  .roof {
+    width: min(980px, 100%);
+    height: 36px;
+    margin: 0 auto -6px;
+    background:
+      linear-gradient(to bottom right, transparent 49.5%, var(--wood) 50%) left / 50.1% 100% no-repeat,
+      linear-gradient(to bottom left, transparent 49.5%, var(--wood) 50%) right / 50.1% 100% no-repeat;
+  }
+  .stage {
+    position: relative;
+    height: clamp(320px, 48vw, 460px);
+    user-select: none;
+    touch-action: none;
+  }
+  .stage svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .tag {
+    position: absolute;
+    transform: translate(-50%, -100%);
+    font-weight: 800;
+    font-size: 15px;
+    pointer-events: none;
+    z-index: 4;
+    color: var(--shell-deep);
+    white-space: nowrap;
+  }
+  .tag.mid { color: var(--wood-dark); }
+  .zone { position: absolute; z-index: 1; border-radius: 50%; }
+  .zone.share { z-index: 2; border-radius: 10px; }
+  .zone.hot { background: rgba(240, 180, 41, 0.32); }
+  .ghost, .pill { position: absolute; transform: translate(-50%, -50%); pointer-events: none; }
+  .ghost {
+    border: 2px dashed var(--gold-deep);
+    border-radius: 50%;
+    z-index: 3;
+    background: rgba(255, 250, 242, 0.45);
+  }
+  .pill {
+    height: 7px;
+    border-radius: 99px;
+    background: var(--shell-deep);
+    box-shadow: 0 0 0 2px rgba(255, 250, 242, 0.92);
+    z-index: 1;
+    opacity: 0;
+  }
+  .stage.won .pill { opacity: 1; }
+  .electron {
+    position: absolute;
+    width: var(--e);
+    height: var(--e);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    display: grid;
+    place-items: center;
+    cursor: grab;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+  }
+  .electron:active { cursor: grabbing; }
+  .electron.picked { background: rgba(240, 180, 41, 0.42); box-shadow: 0 0 0 2px var(--ink); }
+  .electron.guest { background: rgba(255, 226, 196, 0.92); box-shadow: 0 0 0 2px var(--warn); }
+  .electron .mark { display: block; }
+  .electron .mark.x {
+    width: 68%;
+    height: 68%;
+    background:
+      linear-gradient(var(--cross), var(--cross)) center / 100% var(--arm) no-repeat,
+      linear-gradient(var(--cross), var(--cross)) center / var(--arm) 100% no-repeat;
+    transform: rotate(45deg);
+  }
+  .electron .mark.o {
+    width: 58%;
+    height: 58%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 32%, #9eb6e4, var(--dot) 62%, #102848);
+  }
+  .electron.face .mark { animation: glow 1.8s ease-in-out infinite; }
+  @keyframes glow {
+    50% { filter: drop-shadow(0 0 3px rgba(168, 107, 0, 0.9)); }
+  }
+  .hint { min-height: 1.4em; margin: 8px 0 0; text-align: center; color: #5c5146; font-size: 15px; }
+  .feedback {
+    min-height: 3.2em;
+    margin: 10px 0;
+    padding: 10px 12px;
+    border-radius: 14px;
+    background: white;
+    text-align: center;
+    font-size: clamp(16px, 2.5vw, 20px);
+  }
+  .feedback.ok { background: #e5f6ea; color: var(--ok); }
+  .feedback.warn { background: #fff1e4; color: var(--warn); }
+  .actions { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+  .actions button, .overlay button {
+    border: 0;
+    border-radius: 999px;
+    padding: 12px 18px;
+    font-size: 18px;
+    background: var(--wood);
+    color: white;
+    cursor: pointer;
+  }
+  .actions button.ghost-btn { background: #efe6d8; color: var(--ink); }
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(43, 36, 28, 0.45);
+    display: grid;
+    place-items: center;
+    padding: 16px;
+    z-index: 30;
+  }
+  .card {
+    width: min(680px, 100%);
+    background: var(--paper);
+    border-radius: 24px;
+    padding: 22px 16px;
+    text-align: center;
+  }
+  .card h2 { margin: 0 0 8px; font-size: clamp(26px, 6vw, 32px); }
+  .card p { margin: 8px 0; line-height: 1.55; }
+  .minis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 12px; }
+  .minis figure { margin: 0; }
+  .minis figcaption { font-size: 13px; font-weight: 700; margin-top: 4px; }
+  .card .minis + button, #again { margin-top: 14px; }
+  .minis svg { width: 100%; height: auto; background: #fff; border-radius: 12px; border: 2px solid #eadfcd; }
+  .hidden { display: none; }
+  @media (max-width: 700px) {
+    .app { padding: 8px 6px 20px; }
+    .house { border-width: 3px; padding: 8px 4px 12px; }
+    .stage { height: clamp(268px, 78vw, 360px); }
+    .tag { font-size: 13px; }
+    .meter, .total { padding: 6px 4px; }
+    .meter small, .total small { font-size: 12px; }
+    .meters { gap: 6px; }
+    :root { --arm: 2px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .electron.face .mark { animation: none; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="roof" aria-hidden="true"></div>
+  <div class="house">
+    <header>
+      <h1>電子共享屋</h1>
+      <p class="goal">目標：<b id="goal">氬的穩定電子排佈</b></p>
+      <p class="step" id="step">第 1 / 3 關 · 氯分子</p>
+      <p class="legend"><i class="x">×</i> 左邊原子　　<i class="o">●</i> 右邊原子　　周圍 = 身邊 + 共用</p>
+    </header>
+    <div class="meters">
+      <div class="meter" id="meterL">
+        <small id="labelL">左 · 氯 周圍</small>
+        <div class="num" id="numL">7</div>
+        <small class="parts"><span id="ownL">身邊 7</span><span id="sharePartL">共用 0</span></small>
+      </div>
+      <div class="total">
+        <small>全圖電子</small>
+        <div class="num" id="numT">14</div>
+        <small id="shareLabel">共用 0 粒 · 0 對</small>
+        <small id="fromL">左 × 0</small>
+        <small id="fromR">右 ● 0</small>
+      </div>
+      <div class="meter" id="meterR">
+        <small id="labelR">右 · 氯 周圍</small>
+        <div class="num" id="numR">7</div>
+        <small class="parts"><span id="ownR">身邊 7</span><span id="sharePartR">共用 0</span></small>
+      </div>
+    </div>
+    <p class="formula" id="formula">氯分子 <b>Cl₂</b></p>
+    <div class="stage" id="stage">
+      <svg id="board" aria-hidden="true"></svg>
+      <div class="tag" id="tagL">氯</div>
+      <div class="tag mid" id="tagS">共用區</div>
+      <div class="tag" id="tagR">氯</div>
+      <div class="zone" data-zone="L" id="zoneL"></div>
+      <div class="zone" data-zone="R" id="zoneR"></div>
+      <div class="zone share" data-zone="S" id="zoneS"></div>
+      <div id="layer"></div>
+    </div>
+    <p class="hint" id="hint"></p>
+  </div>
+  <p class="feedback" id="feedback" role="status"></p>
+  <div class="actions">
+    <button class="ghost-btn" id="retry" type="button">重試</button>
+    <button id="next" class="hidden" type="button">去氧氣屋</button>
+  </div>
+</div>
+<div class="overlay" id="intro">
+  <div class="card">
+    <h2>電子共享屋</h2>
+    <p>兩粒原子想達到貴氣體的穩定電子排佈。左邊的電子是 ×，右邊的電子是 ●。把指向中間的電子拖進重疊區，每一對共用都要左右各一粒。</p>
+    <p>氯分子、氧分子和氮分子的電子圖都不相同。</p>
+    <button id="start" type="button">開始</button>
+  </div>
+</div>
+<div class="overlay hidden" id="done">
+  <div class="card">
+    <h2>三間屋都穩定了</h2>
+    <p>氯達到氬的穩定電子排佈。氧和氮都達到氖的穩定電子排佈：氧是雙鍵，氮是三鍵，兩幅電子圖並不相同。電子沒有送走，也沒有變多。</p>
+    <div class="minis" id="minis"></div>
+    <button id="again" type="button">再玩一次</button>
+  </div>
+</div>
+<script>
+(function () {
+  var LEVELS = [
+    {
+      formula: "Cl₂", symbol: "Cl", name: "氯", noble: "氬",
+      lonePairs: 3, bondPairs: 1, bondName: "單鍵", bondMark: "−",
+      hue: "#2f9e62", hueDeep: "#1c6b40", tint: "rgba(47,158,98,0.16)",
+      next: "去氧氣屋",
+      hint: "氯原子最外層有 7 粒電子：三對，加一粒指向對方。把一粒 × 和一粒 ● 拖進中間虛線。",
+      success: "入住成功，達到氬的穩定電子排佈。氯分子是單鍵，每邊留下三對電子。電子沒有送走，也沒有變多。"
+    },
+    {
+      formula: "O₂", symbol: "O", name: "氧", noble: "氖",
+      lonePairs: 2, bondPairs: 2, bondName: "雙鍵", bondMark: "=",
+      hue: "#e15a45", hueDeep: "#a33b2c", tint: "rgba(225,90,69,0.16)",
+      next: "去氮氣屋",
+      hint: "氧原子最外層有 6 粒電子：上下兩對，加兩粒指向中間。重疊區有兩個虛線位置，每對都是 × 和 ●。",
+      success: "入住成功，達到氖的穩定電子排佈。氧分子是雙鍵，每邊留下兩對電子。電子沒有送走，也沒有變多。"
+    },
+    {
+      formula: "N₂", symbol: "N", name: "氮", noble: "氖",
+      lonePairs: 1, bondPairs: 3, bondName: "三鍵", bondMark: "≡",
+      hue: "#3a6fbf", hueDeep: "#234e8f", tint: "rgba(58,111,191,0.16)",
+      next: "",
+      hint: "氮原子最外層有 5 粒電子：外側一對，加三粒指向中間。重疊區有三個虛線位置，每對都是 × 和 ●。",
+      success: "入住成功，達到氖的穩定電子排佈。氮分子是三鍵，每邊只留下外側一對電子。電子沒有送走，也沒有變多。"
+    }
+  ];
+
+  var levelIndex = 0;
+  var electrons = [];
+  var selected = null;
+  var drag = null;
+  var solved = [false, false, false];
+  var geom = null;
+  var shareRect = null;
+
+  var stage = document.getElementById("stage");
+  var board = document.getElementById("board");
+  var layer = document.getElementById("layer");
+  var goal = document.getElementById("goal");
+  var step = document.getElementById("step");
+  var hint = document.getElementById("hint");
+  var formula = document.getElementById("formula");
+  var numL = document.getElementById("numL");
+  var numR = document.getElementById("numR");
+  var numT = document.getElementById("numT");
+  var ownL = document.getElementById("ownL");
+  var ownR = document.getElementById("ownR");
+  var sharePartL = document.getElementById("sharePartL");
+  var sharePartR = document.getElementById("sharePartR");
+  var shareLabel = document.getElementById("shareLabel");
+  var fromL = document.getElementById("fromL");
+  var fromR = document.getElementById("fromR");
+  var labelL = document.getElementById("labelL");
+  var labelR = document.getElementById("labelR");
+  var meterL = document.getElementById("meterL");
+  var meterR = document.getElementById("meterR");
+  var tagL = document.getElementById("tagL");
+  var tagR = document.getElementById("tagR");
+  var tagS = document.getElementById("tagS");
+  var zoneL = document.getElementById("zoneL");
+  var zoneR = document.getElementById("zoneR");
+  var zoneS = document.getElementById("zoneS");
+  var feedback = document.getElementById("feedback");
+  var nextBtn = document.getElementById("next");
+  var done = document.getElementById("done");
+  var minis = document.getElementById("minis");
+
+  function level() { return LEVELS[levelIndex]; }
+
+  function loneAngles(lv, side) {
+    if (lv.lonePairs === 3) return side === "L" ? [180, 90, -90] : [0, 90, -90];
+    if (lv.lonePairs === 2) return [90, -90];
+    return side === "L" ? [180] : [0];
+  }
+
+  function slotDeltas(n, slotGap) {
+    if (n === 1) return [0];
+    if (n === 2) return [-slotGap, slotGap];
+    return [-slotGap, 0, slotGap];
+  }
+
+  function buildGeom(w, h, e, topPad, botPad) {
+    var sidePad = 2;
+    var pairHalf = e / 2 + 4;
+    var ghostR = Math.max(7, e * 0.4);
+    var sharePad = 4;
+    var shareHalf = pairHalf + ghostR + sharePad;
+    var symbolR = Math.max(11, Math.min(20, e * 0.52));
+    var faceGap = 5;
+    var halfD = shareHalf + faceGap + e + 4 + symbolR;
+    var slotGap = e + 6;
+    var loneHalf = e / 2 + 4;
+    var far = Math.hypot(halfD + pairHalf, slotGap);
+    var R = far + ghostR + 6;
+    var mid = w / 2;
+    if (halfD + R > mid - sidePad) return null;
+    var minCy = topPad + R;
+    var maxCy = h - botPad - R;
+    if (minCy > maxCy + 0.01) return null;
+    var cy = (minCy + maxCy) / 2;
+    var leftX = mid - halfD;
+    var faceX = (mid - shareHalf) - faceGap - e / 2;
+    if (faceX - e / 2 < leftX + symbolR + 3) return null;
+    var g = {
+      w: w, h: h, e: e, pairHalf: pairHalf, pairGap: pairHalf, ghostR: ghostR,
+      sharePad: sharePad, shareHalf: shareHalf, symbolR: symbolR, faceGap: faceGap,
+      halfD: halfD, slotGap: slotGap, loneHalf: loneHalf, R: R, cy: cy, mid: mid,
+      faceX: faceX, loneR: R - e / 2 - 8,
+      left: { x: leftX, y: cy },
+      right: { x: mid + halfD, y: cy }
+    };
+    if (g.loneR < symbolR + e) return null;
+    if (!arrangementFits(g)) return null;
+    return g;
+  }
+
+  function homePoints(g, lv) {
+    var pts = [];
+    ["L", "R"].forEach(function (side) {
+      loneAngles(lv, side).forEach(function (deg, slot) {
+        pts.push(loneSeat(side, slot, 0, g, lv));
+        pts.push(loneSeat(side, slot, 1, g, lv));
+      });
+      slotDeltas(lv.bondPairs, g.slotGap).forEach(function (dy, index) {
+        var x = side === "L" ? g.faceX : (g.mid * 2 - g.faceX);
+        pts.push({ x: x, y: g.cy + dy, face: true, side: side, index: index });
+      });
+    });
+    return pts;
+  }
+
+  function arrangementFits(g) {
+    var specs = [
+      { lonePairs: 3, bondPairs: 1 },
+      { lonePairs: 2, bondPairs: 2 },
+      { lonePairs: 1, bondPairs: 3 }
+    ];
+    for (var s = 0; s < specs.length; s++) {
+      var lv = specs[s];
+      var pts = homePoints(g, lv);
+      var i, j;
+      for (i = 0; i < pts.length; i++) {
+        var p = pts[i];
+        if (p.x - g.e / 2 < 1 || p.y - g.e / 2 < 1 || p.x + g.e / 2 > g.w - 1 || p.y + g.e / 2 > g.h - 1) return false;
+        var ownX = p.side === "R" || p.x > g.mid ? g.right.x : g.left.x;
+        if (p.face) ownX = p.side === "L" ? g.left.x : g.right.x;
+        var otherX = ownX === g.left.x ? g.right.x : g.left.x;
+        var dOwn = Math.hypot(p.x - ownX, p.y - g.cy);
+        var dOther = Math.hypot(p.x - otherX, p.y - g.cy);
+        if (dOwn + g.e * 0.34 > g.R) return false;
+        if (Math.hypot(p.x - ownX, p.y - g.cy) < g.symbolR + g.e / 2 + 2) return false;
+        if (p.face && dOther < g.R + 2) return false;
+        for (j = i + 1; j < pts.length; j++) {
+          if (Math.hypot(p.x - pts[j].x, p.y - pts[j].y) < g.e + 2) return false;
+        }
+      }
+      var deltas = slotDeltas(lv.bondPairs, g.slotGap);
+      for (i = 0; i < deltas.length; i++) {
+        var gy = g.cy + deltas[i];
+        var gxs = [g.mid - g.pairHalf, g.mid + g.pairHalf];
+        for (j = 0; j < gxs.length; j++) {
+          var dL = Math.hypot(gxs[j] - g.left.x, gy - g.cy);
+          var dR = Math.hypot(gxs[j] - g.right.x, gy - g.cy);
+          if (dL + g.ghostR > g.R - 1 || dR + g.ghostR > g.R - 1) return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  function metrics(w, h, compact) {
+    var topPad = compact ? 6 : 18;
+    var botPad = compact ? 6 : 8;
+    var lo = 14;
+    var hi = compact ? 36 : 46;
+    var best = null;
+    var step;
+    for (step = 0; step < 14; step++) {
+      var mid = (lo + hi) / 2;
+      var g = buildGeom(w, h, mid, topPad, botPad);
+      if (g) { best = g; lo = mid; }
+      else hi = mid;
+    }
+    if (!best) best = buildGeom(w, h, 14, topPad, botPad);
+    return best;
+  }
+
+  function loneSeat(side, slot, seat, g, lv) {
+    var c = side === "L" ? g.left : g.right;
+    var theta = loneAngles(lv, side)[slot] * Math.PI / 180;
+    var px = c.x + g.loneR * Math.cos(theta);
+    var py = c.y - g.loneR * Math.sin(theta);
+    var tx = Math.sin(theta);
+    var ty = Math.cos(theta);
+    var s = seat === 0 ? -1 : 1;
+    return { x: px + tx * g.loneHalf * s, y: py + ty * g.loneHalf * s, side: side };
+  }
+
+  function facePos(side, index, g, lv) {
+    var deltas = slotDeltas(lv.bondPairs, g.slotGap);
+    var x = side === "L" ? g.faceX : (g.mid * 2 - g.faceX);
+    return { x: x, y: g.cy + deltas[index], side: side, face: true };
+  }
+
+  function bondSlots(g, n) {
+    return slotDeltas(n, g.slotGap).map(function (dy) {
+      return { x: g.mid, y: g.cy + dy };
+    });
+  }
+
+  function findSpot(g, cx, existing, outward) {
+    var spots = [];
+    var row, col, sign, dy;
+    sign = outward || 0;
+    if (sign === 0) {
+      for (row = 0; row < 4; row++) {
+        for (col = -1; col <= 1; col++) {
+          spots.push({ x: g.mid + col * (g.e + 5), y: g.cy + g.slotGap + g.e * 1.35 + row * (g.e + 5) });
+          spots.push({ x: g.mid + col * (g.e + 5), y: g.cy - g.slotGap - g.e * 1.35 - row * (g.e + 5) });
+        }
+      }
+    } else {
+      for (col = 0; col < 4; col++) {
+        for (row = 0; row <= 4; row++) {
+          dy = row === 0 ? 0 : (row % 2 === 1 ? 1 : -1) * Math.ceil(row / 2) * (g.e + 5);
+          spots.push({
+            x: cx + sign * (g.symbolR + g.e * 0.8 + col * (g.e + 5)),
+            y: g.cy + dy
+          });
+        }
+      }
+    }
+    var i, j, p, clash;
+    for (i = 0; i < spots.length; i++) {
+      p = spots[i];
+      if (p.x - g.e / 2 < 1 || p.y - g.e / 2 < 1 || p.x + g.e / 2 > g.w - 1 || p.y + g.e / 2 > g.h - 1) continue;
+      clash = false;
+      for (j = 0; j < existing.length; j++) {
+        if (Math.hypot(existing[j].x - p.x, existing[j].y - p.y) < g.e + 2) { clash = true; break; }
+      }
+      if (!clash) return p;
+    }
+    return {
+      x: Math.max(g.e / 2 + 1, Math.min(g.w - g.e / 2 - 1, cx)),
+      y: Math.max(g.e / 2 + 1, Math.min(g.h - g.e / 2 - 1, g.cy))
+    };
+  }
+
+  function counts() {
+    var L = 0, R = 0, S = 0, sL = 0, sR = 0, foreign = false;
+    for (var i = 0; i < electrons.length; i++) {
+      var e = electrons[i];
+      if (e.zone === "L") L++;
+      else if (e.zone === "R") R++;
+      else S++;
+      if (e.zone === "S" && e.owner === "L") sL++;
+      if (e.zone === "S" && e.owner === "R") sR++;
+      if ((e.zone === "L" || e.zone === "R") && e.zone !== e.owner) foreign = true;
+    }
+    return { L: L, R: R, S: S, sL: sL, sR: sR, aL: L + S, aR: R + S, total: electrons.length, foreign: foreign };
+  }
+
+  function isWin(c, lv) {
+    if (c.foreign) return false;
+    if (c.sL + c.sR !== c.S) return false;
+    if (c.L !== lv.lonePairs * 2 || c.R !== lv.lonePairs * 2) return false;
+    return c.sL === lv.bondPairs && c.sR === lv.bondPairs;
+  }
+
+  function messageFor(c, lv, won) {
+    if (won) return { text: lv.success, kind: "ok" };
+    if (c.foreign) return { text: "電子放到對方身上不算共用。把每粒原子自己的電子放進中間重疊區。", kind: "warn" };
+    if (c.S > 0 && (c.sL !== c.sR || (c.S >= 2 && c.sL === 0))) return { text: "共用要成對。每一對都是一粒 × 和一粒 ●，左右各出一粒。", kind: "warn" };
+    if (c.aL > 8 && c.aR > 8) return { text: "超過" + lv.noble + "的穩定電子排佈了，搬回一些電子。", kind: "warn" };
+    if (c.S > lv.bondPairs * 2) return { text: "共用電子太多了，搬回一些到原本的原子。", kind: "warn" };
+    if (c.S < lv.bondPairs * 2) return { text: "還未到" + lv.noble + "的穩定電子排佈，再放一對進重疊區。", kind: "warn" };
+    return { text: "周圍的電子數還未對上" + lv.noble + "的穩定電子排佈。", kind: "warn" };
+  }
+
+  function layout(g, lv, won) {
+    var items = [];
+    var ghosts = [];
+    var slots = bondSlots(g, lv.bondPairs);
+    ["L", "R"].forEach(function (side) {
+      var own = electrons.filter(function (e) { return e.zone === side && e.owner === side; });
+      var foreign = electrons.filter(function (e) { return e.zone === side && e.owner !== side; });
+      if (won) {
+        own.forEach(function (e, i) {
+          var p = loneSeat(side, Math.floor(i / 2), i % 2, g, lv);
+          items.push({ e: e, x: p.x, y: p.y, guest: false, face: false });
+        });
+      } else {
+        own.forEach(function (e) {
+          var p = e.home === "lone" ? loneSeat(side, e.slot, e.seat, g, lv) : facePos(side, e.slot, g, lv);
+          items.push({ e: e, x: p.x, y: p.y, guest: false, face: e.home === "face" });
+        });
+      }
+      foreign.forEach(function (e) {
+        var p = findSpot(g, side === "L" ? g.left.x : g.right.x, items, side === "L" ? -1 : 1);
+        items.push({ e: e, x: p.x, y: p.y, guest: true, face: false });
+      });
+    });
+
+    var Ls = electrons.filter(function (e) { return e.zone === "S" && e.owner === "L"; });
+    var Rs = electrons.filter(function (e) { return e.zone === "S" && e.owner === "R"; });
+    slots.forEach(function (slot) {
+      var a = Ls.length ? Ls.shift() : null;
+      var b = Rs.length ? Rs.shift() : null;
+      if (a && b) {
+        items.push({ e: a, x: slot.x - g.pairHalf, y: slot.y, guest: false, face: false });
+        items.push({ e: b, x: slot.x + g.pairHalf, y: slot.y, guest: false, face: false });
+      } else if (a || b) {
+        var same = a ? Ls : Rs;
+        var first = a || b;
+        var second = same.length ? same.shift() : null;
+        if (second) {
+          items.push({ e: first, x: slot.x - g.pairHalf, y: slot.y, guest: false, face: false });
+          items.push({ e: second, x: slot.x + g.pairHalf, y: slot.y, guest: false, face: false });
+        } else {
+          var onLeft = first.owner === "L";
+          items.push({ e: first, x: slot.x + (onLeft ? -g.pairHalf : g.pairHalf), y: slot.y, guest: false, face: false });
+          ghosts.push({ x: slot.x + (onLeft ? g.pairHalf : -g.pairHalf), y: slot.y });
+        }
+      } else {
+        ghosts.push({ x: slot.x - g.pairHalf, y: slot.y });
+        ghosts.push({ x: slot.x + g.pairHalf, y: slot.y });
+      }
+    });
+    var overflow = Ls.concat(Rs);
+    overflow.forEach(function (e) {
+      var p = findSpot(g, g.mid, items, 0);
+      items.push({ e: e, x: p.x, y: p.y, guest: false, face: false });
+    });
+
+    var pills = [];
+    if (won) {
+      slots.forEach(function (slot) {
+        pills.push({ x: slot.x, y: slot.y, w: g.pairHalf * 2 + g.e * 0.15 });
+      });
+    }
+    var top = slots[0].y;
+    var bot = slots[slots.length - 1].y;
+    ghosts.forEach(function (p) {
+      if (p.y < top) top = p.y;
+      if (p.y > bot) bot = p.y;
+    });
+    var zone = {
+      x: g.mid - g.shareHalf,
+      y: top - g.ghostR - g.sharePad,
+      w: g.shareHalf * 2,
+      h: (bot - top) + (g.ghostR + g.sharePad) * 2
+    };
+    return { items: items, ghosts: ghosts, pills: pills, slots: slots, zone: zone };
+  }
+
+  function resetElectrons() {
+    var lv = level();
+    var list = [];
+    ["L", "R"].forEach(function (owner) {
+      var p, b;
+      for (p = 0; p < lv.lonePairs; p++) {
+        list.push({ id: owner + "a" + p, owner: owner, home: "lone", slot: p, seat: 0, zone: owner });
+        list.push({ id: owner + "b" + p, owner: owner, home: "lone", slot: p, seat: 1, zone: owner });
+      }
+      for (b = 0; b < lv.bondPairs; b++) {
+        list.push({ id: owner + "f" + b, owner: owner, home: "face", slot: b, seat: 0, zone: owner });
+      }
+    });
+    electrons = list;
+    selected = null;
+  }
+
+  function shellSVG(g, lv, clipId) {
+    var font = Math.max(11, g.symbolR * 1.35);
+    function disk(c, fill) {
+      return '<circle cx="' + c.x + '" cy="' + c.y + '" r="' + g.R + '" fill="' + fill + '"/>';
+    }
+    function ring(c) {
+      return '<circle cx="' + c.x + '" cy="' + c.y + '" r="' + g.R + '" fill="none" stroke="' + lv.hue + '" stroke-width="4"/>';
+    }
+    function symbol(c) {
+      return '<circle cx="' + c.x + '" cy="' + c.y + '" r="' + g.symbolR + '" fill="#fffaf2" stroke="' + lv.hue + '" stroke-width="2"/>'
+        + '<text x="' + c.x + '" y="' + c.y + '" text-anchor="middle" dominant-baseline="central" font-size="' + font + '" font-weight="700" fill="' + lv.hueDeep + '">' + lv.symbol + '</text>';
+    }
+    return '<defs><clipPath id="' + clipId + '"><circle cx="' + g.left.x + '" cy="' + g.left.y + '" r="' + g.R + '"/></clipPath></defs>'
+      + disk(g.left, lv.tint) + disk(g.right, lv.tint)
+      + '<circle cx="' + g.right.x + '" cy="' + g.right.y + '" r="' + g.R + '" fill="rgba(240,180,41,0.28)" clip-path="url(#' + clipId + ')"/>'
+      + ring(g.left) + ring(g.right)
+      + symbol(g.left) + symbol(g.right);
+  }
+
+  function miniSVG(lv) {
+    var g = metrics(420, 280, true);
+    var saved = electrons;
+    var fake = [];
+    ["L", "R"].forEach(function (owner) {
+      var n = lv.lonePairs * 2;
+      var i;
+      for (i = 0; i < n; i++) fake.push({ id: owner + i, owner: owner, home: "lone", slot: Math.floor(i / 2), seat: i % 2, zone: owner });
+      for (i = 0; i < lv.bondPairs; i++) fake.push({ id: owner + "s" + i, owner: owner, home: "face", slot: i, seat: 0, zone: "S" });
+    });
+    electrons = fake;
+    var lay = layout(g, lv, true);
+    electrons = saved;
+    var marks = lay.items.map(function (item) {
+      if (item.e.owner === "L") {
+        var x = item.x, y = item.y, s = Math.max(3.2, g.e * 0.22);
+        return '<path d="M ' + (x - s) + ' ' + (y - s) + ' L ' + (x + s) + ' ' + (y + s) + ' M ' + (x + s) + ' ' + (y - s) + ' L ' + (x - s) + ' ' + (y + s) + '" stroke="#1a4a32" stroke-width="1.7" stroke-linecap="round"/>';
+      }
+      return '<circle cx="' + item.x + '" cy="' + item.y + '" r="' + Math.max(2.8, g.e * 0.18) + '" fill="#1a3d78"/>';
+    }).join("");
+    var bars = lay.pills.map(function (p) {
+      return '<line x1="' + (p.x - g.pairHalf) + '" y1="' + p.y + '" x2="' + (p.x + g.pairHalf) + '" y2="' + p.y + '" stroke="' + lv.hueDeep + '" stroke-width="3" stroke-linecap="round"/>';
+    }).join("");
+    var x0 = g.left.x - g.R - 6;
+    var y0 = g.cy - g.R - 6;
+    var vw = (g.right.x + g.R + 6) - x0;
+    var vh = (g.cy + g.R + 6) - y0;
+    return '<svg viewBox="' + x0 + ' ' + y0 + ' ' + vw + ' ' + vh + '" role="img" aria-label="' + lv.name + '分子完成的電子圖">' + shellSVG(g, lv, "mini-" + lv.symbol) + bars + marks + "</svg>";
+  }
+
+  function render() {
+    var lv = level();
+    var rect = stage.getBoundingClientRect();
+    var g = metrics(rect.width, rect.height, false);
+    geom = g;
+    var c = counts();
+    var won = isWin(c, lv);
+    var msg = messageFor(c, lv, won);
+    stage.style.setProperty("--e", g.e + "px");
+    stage.style.setProperty("--arm", Math.max(2, g.e * 0.11) + "px");
+    document.documentElement.style.setProperty("--shell", lv.hue);
+    document.documentElement.style.setProperty("--shell-deep", lv.hueDeep);
+    stage.classList.toggle("won", won);
+
+    board.setAttribute("viewBox", "0 0 " + g.w + " " + g.h);
+    board.innerHTML = shellSVG(g, lv, "lens-main");
+
+    function placeDisk(node, center) {
+      node.style.left = (center.x - g.R) + "px";
+      node.style.top = (center.y - g.R) + "px";
+      node.style.width = (g.R * 2) + "px";
+      node.style.height = (g.R * 2) + "px";
+    }
+    placeDisk(zoneL, g.left);
+    placeDisk(zoneR, g.right);
+
+    var lay = layout(g, lv, won);
+    shareRect = lay.zone;
+    if (lay.zone) {
+      zoneS.style.left = lay.zone.x + "px";
+      zoneS.style.top = lay.zone.y + "px";
+      zoneS.style.width = lay.zone.w + "px";
+      zoneS.style.height = lay.zone.h + "px";
+    }
+
+    tagL.textContent = lv.name;
+    tagR.textContent = lv.name;
+    tagL.style.left = g.left.x + "px";
+    tagR.style.left = g.right.x + "px";
+    tagS.style.left = g.mid + "px";
+    var tagY = Math.max(14, g.cy - g.R - 1);
+    tagL.style.top = tagY + "px";
+    tagR.style.top = tagY + "px";
+    tagS.style.top = tagY + "px";
+
+    layer.replaceChildren();
+    lay.pills.forEach(function (p) {
+      var pill = document.createElement("div");
+      pill.className = "pill";
+      pill.style.left = p.x + "px";
+      pill.style.top = p.y + "px";
+      pill.style.width = p.w + "px";
+      layer.appendChild(pill);
+    });
+    lay.ghosts.forEach(function (p) {
+      var ghost = document.createElement("div");
+      ghost.className = "ghost";
+      ghost.style.left = p.x + "px";
+      ghost.style.top = p.y + "px";
+      ghost.style.width = (g.ghostR * 2) + "px";
+      ghost.style.height = (g.ghostR * 2) + "px";
+      layer.appendChild(ghost);
+    });
+    lay.items.forEach(function (item) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "electron"
+        + (selected === item.e.id ? " picked" : "")
+        + (item.guest ? " guest" : "")
+        + (item.face ? " face" : "");
+      btn.dataset.id = item.e.id;
+      btn.style.left = item.x + "px";
+      btn.style.top = item.y + "px";
+      var mark = document.createElement("span");
+      mark.className = "mark " + (item.e.owner === "L" ? "x" : "o");
+      btn.appendChild(mark);
+      var who = item.e.owner === "L" ? "左邊" : "右邊";
+      var where = item.guest ? "，放在對方身上" : (item.e.zone === "S" ? "，在共用區" : "");
+      btn.setAttribute("aria-label", who + lv.name + "原子的電子" + where);
+      btn.addEventListener("pointerdown", onPointerDown);
+      btn.addEventListener("contextmenu", function (event) { event.preventDefault(); });
+      layer.appendChild(btn);
+    });
+
+    goal.textContent = lv.noble + "的穩定電子排佈";
+    step.textContent = "第 " + (levelIndex + 1) + " / 3 關 · " + lv.name + "分子";
+    hint.textContent = won ? "" : lv.hint;
+    var shown = won ? (lv.symbol + lv.bondMark + lv.symbol + " · " + lv.bondName) : lv.formula;
+    formula.innerHTML = lv.name + "分子 <b>" + shown + "</b>";
+    labelL.textContent = "左 · " + lv.name + " 周圍";
+    labelR.textContent = "右 · " + lv.name + " 周圍";
+    numL.textContent = String(c.aL);
+    numR.textContent = String(c.aR);
+    numT.textContent = String(c.total);
+    ownL.textContent = "身邊 " + c.L;
+    ownR.textContent = "身邊 " + c.R;
+    sharePartL.textContent = "共用 " + c.S;
+    sharePartR.textContent = "共用 " + c.S;
+    shareLabel.textContent = "共用 " + c.S + " 粒 · " + Math.floor(c.S / 2) + " 對";
+    fromL.textContent = "左 × " + c.sL;
+    fromR.textContent = "右 ● " + c.sR;
+    meterL.classList.toggle("ready", won);
+    meterR.classList.toggle("ready", won);
+    feedback.textContent = msg.text;
+    feedback.className = "feedback " + msg.kind;
+    solved[levelIndex] = won;
+    nextBtn.textContent = lv.next;
+    nextBtn.classList.toggle("hidden", !(won && levelIndex < 2));
+    var all = solved[0] && solved[1] && solved[2] && levelIndex === 2 && won;
+    done.classList.toggle("hidden", !all);
+    if (all && !minis.childElementCount) {
+      LEVELS.forEach(function (entry) {
+        var fig = document.createElement("figure");
+        fig.innerHTML = miniSVG(entry) + "<figcaption>" + entry.name + "分子 · " + entry.bondName + "</figcaption>";
+        minis.appendChild(fig);
+      });
+    }
+  }
+
+  function moveTo(id, zone) {
+    var electron = electrons.find(function (e) { return e.id === id; });
+    if (!electron || !zone) return;
+    electron.zone = zone;
+    selected = null;
+    render();
+  }
+
+  function zoneFromClient(clientX, clientY) {
+    if (!geom) return null;
+    var rect = stage.getBoundingClientRect();
+    var x = clientX - rect.left;
+    var y = clientY - rect.top;
+    if (shareRect && x >= shareRect.x && x <= shareRect.x + shareRect.w && y >= shareRect.y && y <= shareRect.y + shareRect.h) return "S";
+    var dL = Math.hypot(x - geom.left.x, y - geom.left.y);
+    var dR = Math.hypot(x - geom.right.x, y - geom.right.y);
+    var inL = dL <= geom.R;
+    var inR = dR <= geom.R;
+    if (inL && inR) return x < geom.mid ? "L" : "R";
+    if (inL) return "L";
+    if (inR) return "R";
+    return null;
+  }
+
+  function clearHot() {
+    [zoneL, zoneR, zoneS].forEach(function (z) { z.classList.remove("hot"); });
+  }
+
+  function onPointerDown(event) {
+    if (event.button !== undefined && event.button !== 0) return;
+    var id = event.currentTarget.dataset.id;
+    drag = { id: id, x: event.clientX, y: event.clientY, moved: false, pointer: event.pointerId };
+    try { event.currentTarget.setPointerCapture(event.pointerId); } catch (err) {}
+    event.currentTarget.addEventListener("pointermove", onPointerMove);
+    event.currentTarget.addEventListener("pointerup", onPointerUp);
+    event.currentTarget.addEventListener("pointercancel", onPointerUp);
+    event.preventDefault();
+  }
+
+  function onPointerMove(event) {
+    if (!drag || event.pointerId !== drag.pointer) return;
+    if (Math.abs(event.clientX - drag.x) + Math.abs(event.clientY - drag.y) > 8) drag.moved = true;
+    if (!drag.moved) return;
+    var node = event.currentTarget;
+    node.style.position = "fixed";
+    node.style.left = event.clientX + "px";
+    node.style.top = event.clientY + "px";
+    node.style.zIndex = "40";
+    clearHot();
+    var zone = zoneFromClient(event.clientX, event.clientY);
+    if (zone) document.getElementById("zone" + zone).classList.add("hot");
+  }
+
+  function onPointerUp(event) {
+    if (!drag || event.pointerId !== drag.pointer) return;
+    var id = drag.id;
+    var moved = drag.moved;
+    var node = event.currentTarget;
+    var zone = moved ? zoneFromClient(event.clientX, event.clientY) : null;
+    node.removeEventListener("pointermove", onPointerMove);
+    node.removeEventListener("pointerup", onPointerUp);
+    node.removeEventListener("pointercancel", onPointerUp);
+    drag = null;
+    clearHot();
+    if (moved && zone) {
+      moveTo(id, zone);
+      return;
+    }
+    if (!moved) {
+      selected = selected === id ? null : id;
+      render();
+      return;
+    }
+    render();
+  }
+
+  [zoneL, zoneR, zoneS].forEach(function (zone) {
+    function placeHere(event) {
+      if (event.target.closest && event.target.closest(".electron")) return;
+      if (drag) return;
+      if (!selected) return;
+      moveTo(selected, zone.dataset.zone);
+    }
+    zone.addEventListener("pointerup", placeHere);
+  });
+
+  document.getElementById("retry").addEventListener("click", function () {
+    resetElectrons();
+    render();
+  });
+  nextBtn.addEventListener("click", function () {
+    if (solved[levelIndex] && levelIndex < 2) {
+      levelIndex += 1;
+      resetElectrons();
+      render();
+    }
+  });
+  document.getElementById("start").addEventListener("click", function () {
+    document.getElementById("intro").classList.add("hidden");
+  });
+  document.getElementById("again").addEventListener("click", function () {
+    levelIndex = 0;
+    solved = [false, false, false];
+    minis.replaceChildren();
+    resetElectrons();
+    done.classList.add("hidden");
+    render();
+  });
+
+  if (window.ResizeObserver) {
+    new ResizeObserver(function () { if (!drag) render(); }).observe(stage);
+  } else {
+    window.addEventListener("resize", function () { if (!drag) render(); });
+  }
+
+  resetElectrons();
+  render();
+})();
+</script>
+</body>
+</html>
